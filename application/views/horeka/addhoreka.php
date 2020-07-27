@@ -73,7 +73,13 @@
         </div>
         <div class="form-group">
           <label for="bank_id">Bank</label>
-          <input class="form-control" id="bank_id" required type="text" name="bank_id">
+          <select class="custom-select" id="bank_id" required type="text" name="bank_id">
+            <?php foreach($bank as $row): ?>
+              <option value="<?= $row->bank_id ?>">
+                <?= $row->bank_name ?>
+              </option>
+            <?php endforeach ?>
+          </select>
         </div>
         
         <div class="form-group">

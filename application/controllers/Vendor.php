@@ -24,7 +24,6 @@ class Vendor extends CI_Controller{
         $this->load->model("BankModel");
         $this->load->helper('date');
         $data = array();
-        $data['bank'] = $this->BankModel->get();
         
         $now = "Y-m-d H:i:s";
 
@@ -62,6 +61,9 @@ class Vendor extends CI_Controller{
                 $data["message"] = "data lost";
             }
         }
+
+        $data['bank'] = $this->BankModel->get();
+
         $this->load->view("template/header");
         $this->load->view("vendor/addvendor", $data);
         $this->load->view("template/footer");
@@ -70,7 +72,6 @@ class Vendor extends CI_Controller{
         $this->load->model("VendorModel");
         $this->load->model("BankModel");
         $data['vendor']=$this->VendorModel->getInfo('vendor_id', $vendor_id);
-        $data['bank'] = $this->BankModel->get();
         $now = "Y-m-d H:i:s";
 
         if($this->input->method() == "post") 
@@ -105,6 +106,8 @@ class Vendor extends CI_Controller{
                 $data["message"] = "data lost";
             }
         }
+
+        $data['bank'] = $this->BankModel->get();
         
         $this->load->view("template/header");
         $this->load->view("vendor/updatevendor", $data);

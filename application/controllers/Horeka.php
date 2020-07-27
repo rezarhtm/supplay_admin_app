@@ -22,6 +22,7 @@ class Horeka extends CI_Controller {
     }
     public function insert() {
         $this->load->model("HorekaModel");
+        $this->load->model("BankModel");
         $this->load->helper('date');
         $data = array();
         $now = "Y-m-d H:i:s";
@@ -60,12 +61,16 @@ class Horeka extends CI_Controller {
                 $data["message"] = "data lost";
             }
         }
+
+        $data['bank'] = $this->BankModel->get();
+
         $this->load->view("template/header");
         $this->load->view("horeka/addhoreka", $data);
         $this->load->view("template/footer");
     }
     public function update($horeka_id) {
         $this->load->model("HorekaModel");
+        $this->load->model("BankModel");
         $data['horeka']=$this->HorekaModel->getInfo('horeka_id', $horeka_id);
         $now = "Y-m-d H:i:s";
 
@@ -101,6 +106,8 @@ class Horeka extends CI_Controller {
                 $data["message"] = "data lost";
             }
         }
+
+        $data['bank'] = $this->BankModel->get();
         
         $this->load->view("template/header");
         $this->load->view("horeka/updatehoreka", $data);

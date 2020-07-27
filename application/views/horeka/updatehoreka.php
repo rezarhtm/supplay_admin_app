@@ -61,7 +61,13 @@
         </div>
         <div class="form-group">
           <label for="bank_id">Bank</label>
-          <input class="form-control" id="bank_id" required type="text" name="bank_id" value="<?php echo $horeka['bank_id']; ?>">
+          <select class="custom-select" id="bank_id" required type="text" name="bank_id">
+            <?php foreach($bank as $row): ?>
+              <option <?= $row->bank_id == $horeka['bank_id'] ? "selected" : "" ?> value="<?= $row->bank_id ?>">
+                <?= $row->bank_name ?>
+              </option>
+            <?php endforeach ?>
+          </select>
         </div>
         
         <div class="form-group">
@@ -71,7 +77,7 @@
 
         <div class="form-group">
           <label for="">Status</label>
-          <select name="status_id" id="status_id" class="form-control">
+          <select name="status_id" id="status_id" class="custom-select">
             <option value="1" <?= $horeka['status_id'] == "1" ? "selected" : "" ?>>Aktif</option>
             <option value="0" <?= $horeka['status_id'] == "0" ? "selected" : "" ?>>Tidak Aktif</option>
           </select>
