@@ -74,6 +74,14 @@
           <label for="v_remarks">Catatan</label>
           <input class="form-control" id="v_remarks" type="text" name="v_remarks" value="<?php echo $vendor['v_remarks']; ?>">
         </div>
+
+        <div class="form-group">
+          <label for="">Status</label>
+          <select name="status_id" id="status_id" class="form-control">
+            <option value="1" <?= $vendor['status_id'] == "1" ? "selected" : "" ?>>Aktif</option>
+            <option value="0" <?= $vendor['status_id'] == "0" ? "selected" : "" ?>>Tidak Aktif</option>
+          </select>
+        </div>
         <button type="submit" class="btn btn-success" name="submit">Submit</button>
       </form>
        

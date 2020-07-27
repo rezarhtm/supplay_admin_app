@@ -66,7 +66,7 @@ class Horeka extends CI_Controller {
     }
     public function update($horeka_id) {
         $this->load->model("HorekaModel");
-        $up_data['horeka']=$this->HorekaModel->getInfo('horeka_id', $horeka_id);
+        $data['horeka']=$this->HorekaModel->getInfo('horeka_id', $horeka_id);
         $now = "Y-m-d H:i:s";
 
         if($this->input->method() == "post") 
@@ -74,7 +74,7 @@ class Horeka extends CI_Controller {
             $new['h_name'] = $this->input->post('h_name');
             $new['h_npwp'] = $this->input->post('h_npwp');
             $new['h_username'] = $this->input->post('h_username');
-            $new['h_password'] = $this->input->post('h_password');
+            $new['h_password'] = $this->input->post('h_username');
             $new['h_pic_name'] = $this->input->post('h_pic_name');
             $new['h_address'] = $this->input->post('h_address');
             $new['h_biz_address'] = $this->input->post('h_biz_address');
@@ -103,7 +103,7 @@ class Horeka extends CI_Controller {
         }
         
         $this->load->view("template/header");
-        $this->load->view("horeka/updatehoreka", $up_data);
+        $this->load->view("horeka/updatehoreka", $data);
         $this->load->view("template/footer");
     }
     public function detailhoreka($horeka_id){

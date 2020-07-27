@@ -78,7 +78,7 @@ class Vendor extends CI_Controller{
             $new['v_name'] = $this->input->post('v_name');
             $new['v_npwp'] = $this->input->post('v_npwp');
             $new['v_username'] = $this->input->post('v_username');
-            $new['v_password'] = $this->input->post('v_password');
+            $new['v_password'] = $this->input->post('v_username');
             $new['v_pic_name'] = $this->input->post('v_pic_name');
             $new['v_address'] = $this->input->post('v_address');
             $new['v_biz_address'] = $this->input->post('v_biz_address');
