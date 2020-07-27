@@ -41,7 +41,7 @@ class Bank extends CI_Controller{
 
     public function update($bank_id) {
         $this->load->model("BankModel");
-        $up_data['bank']=$this->BankModel->getInfo('bank_id', $bank_id);
+        $data["bank"] = $this->BankModel->getInfo('bank_id', $bank_id);
         $now = "Y-m-d H:i:s";
 
         if($this->input->method() == "post") 
@@ -61,7 +61,7 @@ class Bank extends CI_Controller{
         }
         
         $this->load->view("template/header");
-        $this->load->view("bank/updatebank", $up_data);
+        $this->load->view("bank/updatebank", $data);
         $this->load->view("template/footer");
     }
     public function detailBank($bank_id){

@@ -2,9 +2,9 @@
 
   <div class="row notification">
     <div class="col-md-12">
-      <?php if (isset($data["status"])) { ?>
-        <div class="alert alert-<?php echo $data["status"];?>">
-          <?php echo $data["message"]; ?>
+      <?php if (isset($status)) { ?>
+        <div class="alert alert-<?php echo $status?>">
+          <?php echo $message ?>
         </div> 
         <?php
       }  

@@ -3,8 +3,8 @@
   <div class="row notification">
     <div class="col-md-12">
       <?php if (isset($status)) { ?>
-        <div class="alert alert-<?php echo $status;?>">
-          <?php echo $message; ?>
+        <div class="alert alert-<?php echo $status ?>">
+          <?php echo $message ?>
         </div> 
         <?php
       }  

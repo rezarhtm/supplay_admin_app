@@ -79,7 +79,7 @@ class product extends CI_Controller {
 
     public function update($product_id) {
         $this->load->model("ProductModel");
-        $up_data['product']=$this->ProductModel->getInfo('product_id', $product_id);
+        $data['product']=$this->ProductModel->getInfo('product_id', $product_id);
         $now = "Y-m-d H:i:s";
 
         if($this->input->method() == "post") 
@@ -107,7 +107,7 @@ class product extends CI_Controller {
         }
         
         $this->load->view("template/header");
-        $this->load->view("product/updateproduct", $up_data);
+        $this->load->view("product/updateproduct", $data);
         $this->load->view("template/footer");
     }
     public function detailproduct($product_id){

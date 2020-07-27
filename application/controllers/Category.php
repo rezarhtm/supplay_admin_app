@@ -38,7 +38,7 @@ class Category extends CI_Controller {
 
     public function update($category_id) {
         $this->load->model("category_entry");
-        $up_data['category']=$this->category_entry->getInfo('category_id', $category_id);
+        $data['category']=$this->category_entry->getInfo('category_id', $category_id);
         $now = "Y-m-d H:i:s";
 
         if($this->input->method() == "post") 
@@ -58,7 +58,7 @@ class Category extends CI_Controller {
         }
         
         $this->load->view("template/header");
-        $this->load->view("category/updatecategory", $up_data);
+        $this->load->view("category/updatecategory", $data);
         $this->load->view("template/footer");
     }
     public function detailCategory($category_id){
