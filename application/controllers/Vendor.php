@@ -21,8 +21,11 @@ class Vendor extends CI_Controller{
     }
     public function insert() {
         $this->load->model("VendorModel");
+        $this->load->model("BankModel");
         $this->load->helper('date');
         $data = array();
+        $data['bank'] = $this->BankModel->get();
+        
         $now = "Y-m-d H:i:s";
 
         if($this->input->method() == "post") 
@@ -43,6 +46,7 @@ class Vendor extends CI_Controller{
                 'v_phone' => $this->input->post('v_phone'),
                 'v_fax' => $this->input->post('v_fax'),
                 'v_email' => $this->input->post('v_email'),
+                'bank_id' => $this->input->post('bank_id'),
                 'v_bank_acc' => $this->input->post('v_bank_acc'),
                 'v_remarks' => $this->input->post('v_remarks'),
                 'status_id' => '1',
@@ -64,7 +68,9 @@ class Vendor extends CI_Controller{
     }
     public function update($vendor_id) {
         $this->load->model("VendorModel");
-        $up_data['vendor']=$this->VendorModel->getInfo('vendor_id', $vendor_id);
+        $this->load->model("BankModel");
+        $data['vendor']=$this->VendorModel->getInfo('vendor_id', $vendor_id);
+        $data['bank'] = $this->BankModel->get();
         $now = "Y-m-d H:i:s";
 
         if($this->input->method() == "post") 
@@ -89,7 +95,7 @@ class Vendor extends CI_Controller{
             $new['status_id'] = $this->input->post('status_id');
             $new['updated_at'] = date($now);
 
-            $id = $this->VendorModel->update($vendor_id, $new); 
+            $id = $this->VendorModel->update($vendor_id, $new);
 
             if($id) {
                 $data["status"] = "success";
@@ -101,7 +107,7 @@ class Vendor extends CI_Controller{
         }
         
         $this->load->view("template/header");
-        $this->load->view("vendor/updatevendor", $up_data);
+        $this->load->view("vendor/updatevendor", $data);
         $this->load->view("template/footer");
     }
     public function detailvendor($vendor_id){

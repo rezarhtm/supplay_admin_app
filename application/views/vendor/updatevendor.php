@@ -2,9 +2,9 @@
 
   <div class="row notification">
     <div class="col-md-12">
-      <?php if (isset($data["status"])) { ?>
-        <div class="alert alert-<?php echo $data["status"];?>">
-          <?php echo $data["message"]; ?>
+      <?php if (isset($status)) { ?>
+        <div class="alert alert-<?php echo $status?>">
+          <?php echo $message; ?>
         </div> 
         <?php
       }  
@@ -61,7 +61,13 @@
         </div>
         <div class="form-group">
           <label for="bank_id">Bank</label>
-          <input class="form-control" id="bank_id" required type="text" name="bank_id" value="<?php echo $vendor['bank_id']; ?>">
+          <select class="form-control" id="bank_id" required type="text" name="bank_id">
+            <?php foreach($bank as $row): ?>
+              <option <?= $row->bank_id == $vendor['bank_id'] ? "selected" : "" ?> value="<?= $row->bank_id ?>">
+                <?= $row->bank_name ?>
+              </option>
+            <?php endforeach ?>
+          </select>
         </div>
         
         <div class="form-group">
