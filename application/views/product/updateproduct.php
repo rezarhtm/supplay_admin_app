@@ -23,7 +23,19 @@
         </div>
         <div class="form-group">
           <label for="vendor_id">Vendor</label>
-          <input class="form-control" id="vendor_id" required type="text" name="vendor_id" value="<?php echo $product['vendor_id']; ?>">
+          <div class="input-group mb-3">
+            <div class="input-group-prepend">
+            <button class="btn btn-outline-secondary dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Pilih</button>
+              <div class="dropdown-menu">
+              <?php foreach($vendor_get as $vendor): ?>
+                <span onclick="clickVendor(<?= $vendor->vendor_id ?>)" class="dropdown-item" style="cursor: pointer;">
+                  <?= $vendor->vendor_id ?>
+                </span>
+              <?php endforeach ?>
+              </div>
+            </div>
+            <input value="<?= $product['vendor_id'] ?>" type="text" id="vendor_id" name="vendor_id" class="form-control" aria-label="Text input with dropdown button">
+          </div>
         </div>
         <div class="form-group">
           <label for="product_desc">Deskripsi</label>
@@ -32,7 +44,13 @@
         </div>
         <div class="form-group">
           <label for="category_id">Kategori</label>
-          <input class="form-control" id="category_id" required type="text" name="category_id" value="<?php echo $product['category_id']; ?>">
+          <select name="category_id" id="category_id" class="custom-select">
+            <?php foreach($category_get as $category): ?>
+              <option <?= $product['category_id'] == $category->category_id ? "selected" : "" ?> value="<?= $category->category_id ?>">
+                <?= $category->category_desc ?>
+              </option>
+            <?php endforeach ?>
+          </select>
         </div>
         <div class="form-group">
           <label for="qty">Jumlah / kuantitas</label>
@@ -61,6 +79,12 @@
       <a href="<?php echo base_url(); ?>index.php/product" class="btn btn-danger" role="button">Kembali ke Daftar Produk</a>
     </div>
   </div>
+
+  <script>
+    function clickVendor(vendor){
+      $("#vendor_id").val(vendor);
+    }
+  </script>
 
 
 </div>

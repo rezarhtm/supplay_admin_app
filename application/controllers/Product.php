@@ -27,20 +27,6 @@ class product extends CI_Controller {
         $data = array();
         $now = "Y-m-d H:i:s";
 
-        $category_get = $this->ProductModel->getCategory();
-
-        $vendor_get = $this->ProductModel->getVendor();
-
-        $data = array(
-            'vendor_get' => $this->ProductModel->getVendor(),
-            'vendor_selected' => $this->input->post('vendor_id'),
-            'category_get' => $this->ProductModel->getCategory(),
-            'category_selected' => $this->input->post('category_id'),
-            
-            #'vendor_get' => $this->ProductModel->getVendor(),
-            #'vendor_selected' => $this->input->post('vendor_id'),
-        );
-
         if($this->input->method() == "post") 
         {
             $data = array(
@@ -70,6 +56,9 @@ class product extends CI_Controller {
                 $data["message"] = "data lost";
             }
         }
+
+        $data['vendor_get'] = $this->ProductModel->getVendor();
+        $data['category_get'] = $this->ProductModel->getCategory();
 
 
         $this->load->view("template/header");
@@ -105,6 +94,9 @@ class product extends CI_Controller {
                 $data["message"] = "data lost";
             }
         }
+
+        $data['vendor_get'] = $this->ProductModel->getVendor();
+        $data['category_get'] = $this->ProductModel->getCategory();
         
         $this->load->view("template/header");
         $this->load->view("product/updateproduct", $data);

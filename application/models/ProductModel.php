@@ -28,26 +28,27 @@ class ProductModel extends CI_Model {
     function getCategory()
     {
         $this->load->database();
-        $result = $this->db->get('category');
-        $dd[''] = 'Please Select';
-        if ($result->num_rows() > 0) {
-            foreach ($result->result() as $row) {
-                $dd[$row->category_id] = $row->category_desc;
-            }
-        }
-        return $dd;
+        $result = $this->db->get('category')->result();
+        // $dd[''] = 'Please Select';
+        // if ($result->num_rows() > 0) {
+        //     foreach ($result->result() as $row) {
+        //         $dd[$row->category_id] = $row->category_desc;
+        //     }
+        // }
+        // return $dd;
+        return $result;
     }
     function getVendor()
     {
         $this->load->database();
-        $resvendor = $this->db->get('vendors');
-        $sel = 'Please Select';
-        if ($resvendor->num_rows() > 0) {
-            foreach ($resvendor->result() as $row){
-                $sel[$row->vendor_id] = $row->v_name;
-            }
-        }
-        return $sel;
+        $resvendor = $this->db->get('vendors')->result();
+        // $sel = 'Please Select';
+        // if ($resvendor->num_rows() > 0) {
+        //     foreach ($resvendor->result() as $row){
+        //         $sel[$row->vendor_id] = $row->v_name;
+        //     }
+        // }
+        return $resvendor;
     }
 }
 

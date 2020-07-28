@@ -34,14 +34,22 @@
           <label for="product_name">Nama Produk</label>
           <input class="form-control" id="product_name" required type="text" name="product_name">
         </div>
+
         <div class="form-group">
           <label for="vendor_id">Vendor</label>
-          <!--<input class="form-control" id="vendor_id" required type="text" name="vendor_id">-->
-          
-          <?php
-            $vendor_attribute = 'class="form-control"';
-            echo form_dropdown('vendor_id', $vendor_get, $vendor_selected);
-          ?>
+          <div class="input-group mb-3">
+            <div class="input-group-prepend">
+            <button class="btn btn-outline-secondary dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Pilih</button>
+              <div class="dropdown-menu">
+              <?php foreach($vendor_get as $vendor): ?>
+                <span onclick="clickVendor(<?= $vendor->vendor_id ?>)" class="dropdown-item" style="cursor: pointer;">
+                  <?= $vendor->vendor_id ?>
+                </span>
+              <?php endforeach ?>
+              </div>
+            </div>
+            <input type="text" id="vendor_id" name="vendor_id" class="form-control" aria-label="Text input with dropdown button">
+          </div>
         </div>
         <div class="form-group">
           <label for="product_desc">Deskripsi</label>
@@ -49,10 +57,13 @@
         </div>
         <div class="form-group">
           <label for="category_id">Kategori</label>
-          <?php
-            $category_attribute = 'class="form-control"';
-            echo form_dropdown('category_id', $category_get, $category_selected);
-          ?>
+          <select name="category_id" id="category_id" class="custom-select">
+            <?php foreach($category_get as $category): ?>
+              <option value="<?= $category->category_id ?>">
+                <?= $category->category_desc ?>
+              </option>
+            <?php endforeach ?>
+          </select>
         </div>
 
         <div class="form-group">
@@ -79,5 +90,10 @@
     </div>
   </div>
 
+  <script>
+    function clickVendor(vendor){
+      $("#vendor_id").val(vendor);
+    }
+  </script>
 
 </div>
