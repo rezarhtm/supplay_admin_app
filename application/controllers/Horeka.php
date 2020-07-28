@@ -49,6 +49,7 @@ class Horeka extends CI_Controller {
                 'h_bank_acc' => $this->input->post('h_bank_acc'),
                 'remarks' => $this->input->post('remarks'),
                 'status_id' => '1',
+                'credit_score' => 1,
                 'created_at' => date($now),
                 'updated_at' => date($now)
             );
@@ -94,6 +95,7 @@ class Horeka extends CI_Controller {
             $new['h_bank_acc'] = $this->input->post('h_bank_acc');
             $new['remarks'] = $this->input->post('remarks');
             $new['status_id'] = $this->input->post('status_id');
+            $new['credit_score'] = $this->input->post('credit_score');
             $new['updated_at'] = date($now);
 
             $id = $this->HorekaModel->update($horeka_id, $new); 

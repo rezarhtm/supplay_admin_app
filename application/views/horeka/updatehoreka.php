@@ -76,10 +76,19 @@
         </div>
 
         <div class="form-group">
-          <label for="">Status</label>
+          <label for="status_id">Status</label>
           <select name="status_id" id="status_id" class="custom-select">
             <option value="1" <?= $horeka['status_id'] == "1" ? "selected" : "" ?>>Aktif</option>
             <option value="0" <?= $horeka['status_id'] == "0" ? "selected" : "" ?>>Tidak Aktif</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label for="credit_score">Credit Score</label>
+          <select name="credit_score" id="credit_score" class="custom-select">
+            <option value="1" <?= $horeka['credit_score'] == "1" ? "selected" : "" ?>>1</option>
+            <option value="2" <?= $horeka['credit_score'] == "2" ? "selected" : "" ?>>2</option>
+            <option value="3" <?= $horeka['credit_score'] == "3" ? "selected" : "" ?>>3</option>
           </select>
         </div>
         <button type="submit" class="btn btn-success" name="submit">Submit</button>
