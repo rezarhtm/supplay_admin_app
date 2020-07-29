@@ -1,19 +1,18 @@
 <div class="container body-content">
 
-  <div class="row notification">
-    <div class="col-md-12">
-      <?php if (isset($status)) { ?>
-        <div class="alert alert-<?php echo $status?>">
+  <?php if (isset($status)) : ?>
+    <div class="row notification">
+      <div class="col-md-12">
+
+        <div class="alert alert-<?php echo $status; ?>">
           <?php echo $message; ?>
-        </div> 
-        <?php
-      }  
-      ?>
+        </div>
+      </div>
     </div>
-  </row>
+  <?php endif ?>
 
   <h2 class="col-md-12 pagetitle" style="padding: 0; margin: 0;">Update Vendor</h2>
-  <div class="row warzone">
+  <div class="row my-3">
     <div class="col-md-12">
 
       <form method="post">
@@ -62,14 +61,14 @@
         <div class="form-group">
           <label for="bank_id">Bank</label>
           <select class="custom-select" id="bank_id" required type="text" name="bank_id">
-            <?php foreach($bank as $row): ?>
+            <?php foreach ($bank as $row) : ?>
               <option <?= $row->bank_id == $vendor['bank_id'] ? "selected" : "" ?> value="<?= $row->bank_id ?>">
                 <?= $row->bank_name ?>
               </option>
             <?php endforeach ?>
           </select>
         </div>
-        
+
         <div class="form-group">
           <label for="v_remarks">Catatan</label>
           <input class="form-control" id="v_remarks" type="text" name="v_remarks" value="<?php echo $vendor['v_remarks']; ?>">
@@ -83,16 +82,12 @@
           </select>
         </div>
         <button type="submit" class="btn btn-success" name="submit">Submit</button>
+        <div class="my-2">
+          <a href="<?php echo base_url(); ?>index.php/vendor" class="btn btn-danger" role="button">Kembali ke Daftar Vendor</a>
+        </div>
       </form>
-       
+
     </div>
   </div>
-
-  <div class="row">
-    <div class="col-md-12 backto">
-      <a href="<?php echo base_url(); ?>index.php/vendor" class="btn btn-danger" role="button">Kembali ke Daftar Vendor</a>
-    </div>
-  </div>
-
 
 </div>

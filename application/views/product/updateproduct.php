@@ -1,19 +1,18 @@
 <div class="container body-content">
 
-  <div class="row notification">
-    <div class="col-md-12">
-      <?php if (isset($status)) { ?>
-        <div class="alert alert-<?php echo $status ?>">
-          <?php echo $message ?>
-        </div> 
-        <?php
-      }  
-      ?>
+  <?php if (isset($status)) : ?>
+    <div class="row notification">
+      <div class="col-md-12">
+
+        <div class="alert alert-<?php echo $status; ?>">
+          <?php echo $message; ?>
+        </div>
+      </div>
     </div>
-  </row>
+  <?php endif ?>
 
   <h2 class="col-md-12 pagetitle" style="padding: 0; margin: 0;">Update Produk</h2>
-  <div class="row warzone">
+  <div class="row my-3">
     <div class="col-md-12">
 
       <form method="post">
@@ -25,13 +24,13 @@
           <label for="vendor_id">Vendor</label>
           <div class="input-group mb-3">
             <div class="input-group-prepend">
-            <button class="btn btn-outline-secondary dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Pilih</button>
+              <button class="btn btn-outline-secondary dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Pilih</button>
               <div class="dropdown-menu">
-              <?php foreach($vendor_get as $vendor): ?>
-                <span onclick="clickVendor(<?= $vendor->vendor_id ?>)" class="dropdown-item" style="cursor: pointer;">
-                  <?= $vendor->vendor_id ?>
-                </span>
-              <?php endforeach ?>
+                <?php foreach ($vendor_get as $vendor) : ?>
+                  <span onclick="clickVendor(<?= $vendor->vendor_id ?>)" class="dropdown-item" style="cursor: pointer;">
+                    <?= $vendor->vendor_id ?>
+                  </span>
+                <?php endforeach ?>
               </div>
             </div>
             <input value="<?= $product['vendor_id'] ?>" type="text" id="vendor_id" name="vendor_id" class="form-control" aria-label="Text input with dropdown button">
@@ -45,7 +44,7 @@
         <div class="form-group">
           <label for="category_id">Kategori</label>
           <select name="category_id" id="category_id" class="custom-select">
-            <?php foreach($category_get as $category): ?>
+            <?php foreach ($category_get as $category) : ?>
               <option <?= $product['category_id'] == $category->category_id ? "selected" : "" ?> value="<?= $category->category_id ?>">
                 <?= $category->category_desc ?>
               </option>
@@ -69,19 +68,16 @@
           <input class="form-control" id="status_id" required type="text" name="status_id" value="<?php echo $product['status_id']; ?>">
         </div>
         <button type="submit" class="btn btn-success" name="submit">Submit</button>
+        <div class="my-2">
+          <a href="<?php echo base_url(); ?>index.php/product" class="btn btn-danger" role="button">Kembali ke Daftar Produk</a>
+        </div>
       </form>
-       
-    </div>
-  </div>
 
-  <div class="row">
-    <div class="col-md-12 backto">
-      <a href="<?php echo base_url(); ?>index.php/product" class="btn btn-danger" role="button">Kembali ke Daftar Produk</a>
     </div>
   </div>
 
   <script>
-    function clickVendor(vendor){
+    function clickVendor(vendor) {
       $("#vendor_id").val(vendor);
     }
   </script>
