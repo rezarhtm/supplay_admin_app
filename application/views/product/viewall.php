@@ -7,7 +7,7 @@
 
   <div class="row warzone">
       <div class="col-md-12">
-        <table class="table table-hover">
+        <table class="table table-hover" id="datatable">
             <thead>
                 <tr>
                     <th>ID Produk</th>
