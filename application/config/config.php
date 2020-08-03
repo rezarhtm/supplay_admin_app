@@ -23,8 +23,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 | a PHP script and you can easily do that on your own.
 |
 */
-// $config['base_url'] = "http://localhost/admin_app/";
-$config['base_url'] = "http://supplay-admin-app.test/";
+$config['base_url'] = "http://localhost/supplay_admin_app/";
 
 /*
 |--------------------------------------------------------------------------
