@@ -15,31 +15,47 @@
  */
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class Home extends CI_Controller
+class Login extends CI_Controller
 {
     /*
     |--------------------------------------------------------------------------
-    | Home Controller
+    | Login Controller
     |--------------------------------------------------------------------------
     |
-    | This controller handles Dashboard.
+    | This controller handles authenticating users for the application and
+    | redirecting them to your home screen. The controller uses a library
+    | to conveniently provide its functionality to your applications.
     |
     */
     public function __construct()
     {
         parent::__construct();
-        $this->load->library('auth');
-        $this->auth->route_access();
+        $this->load->database();
+        $this->load->library(['auth', 'form_validation']);
     }
 
     /**
-     * Display a Dashboard.
-     *
-     * @return mixed
+     * handle the login.
      */
     public function index()
     {
+        $data = array();
 
-        return $this->load->view('home');
+        if($_POST) {
+            $data = $this->auth->login($_POST);
+        }
+
+        return $this->auth->showLoginForm($data);
+    }
+
+    /**
+     * Logout.
+     */
+    public function logout()
+    {
+        if($this->auth->logout())
+            return redirect('login');
+
+        return false;
     }
 }
