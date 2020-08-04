@@ -445,4 +445,20 @@ class Auth
 
         return true;
     }
+
+    public function isRoles($role){
+        if (!$this->hasRole($role)) {
+            return redirect('login');
+        }
+
+        return true;
+    }
+
+    public function isPermissions($permission){
+        if (!$this->can($permission)) {
+            return redirect('login');
+        }
+
+        return true;
+    }
 }
