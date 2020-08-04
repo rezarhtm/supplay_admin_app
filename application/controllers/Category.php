@@ -1,5 +1,15 @@
 <?php
 class Category extends CI_Controller {
+    public function __construct()
+    {
+        parent::__construct();
+        $this->load->library(['auth']);
+
+        // Check Login & Role untuk Admin
+        $this->auth->authenticate();
+        $this->auth->isRoles("admin");
+    }
+    
     public function index() {
         $this->load->model("category_entry");
         $data =array(
