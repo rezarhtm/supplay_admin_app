@@ -5,7 +5,7 @@
             <h2>Bank</h2>
         </div>
         <div>
-            <a href="<?php echo base_url(); ?>index.php/bank/insert" class="btn btn-danger" role="button">
+            <a href="<?php echo base_url(); ?>index.php/admin/bank/insert" class="btn btn-danger" role="button">
                 Add New
             </a>
         </div>
@@ -24,7 +24,7 @@
                     <?php foreach ($banks as $row) { ?>
                         <tr>
                             <td><?php echo $row->bank_name; ?></td>
-                            <td><a href="<?php echo base_url(); ?>index.php/bank/update/<?php echo $row->bank_id; ?>" class="btn btn-danger" role="button">Update</a></td>
+                            <td><a href="<?php echo base_url(); ?>index.php/admin/bank/update/<?php echo $row->bank_id; ?>" class="btn btn-danger" role="button">Update</a></td>
                         </tr>
                     <?php } ?>
                 </tbody>

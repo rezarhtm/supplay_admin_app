@@ -21,7 +21,7 @@
         </div>
         <button type="submit" class="btn btn-success" name="submit">Submit</button>
         <div class="my-2">
-          <a href="<?php echo base_url(); ?>index.php/category" class="btn btn-danger" role="button">Back to Categories</a>
+          <a href="<?php echo base_url(); ?>index.php/admin/category" class="btn btn-danger" role="button">Back to Categories</a>
         </div>
       </form>
     </div>

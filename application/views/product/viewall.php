@@ -5,7 +5,7 @@
             <h2>Produk</h2>
         </div>
         <div>
-            <a href="<?php echo base_url(); ?>index.php/product/insert" class="btn btn-danger btn-reg" role="button">Registrasi</a>
+            <a href="<?php echo base_url(); ?>index.php/admin/product/insert" class="btn btn-danger btn-reg" role="button">Registrasi</a>
         </div>
     </div>
 
@@ -27,8 +27,8 @@
                             <td><?php echo $row->product_id; ?></td>
                             <td><?php echo $row->product_name; ?></td>
                             <td><?php echo $row->vendor_id; ?></td>
-                            <td><a href="<?php echo base_url(); ?>index.php/product/update/<?php echo $row->product_id; ?>" class="btn btn-danger" role="button">Update</a></td>
-                            <td><a href="<?php echo base_url(); ?>index.php/product/detail/<?php echo $row->product_id; ?>" class="btn btn-danger" role="button">View</a></td>
+                            <td><a href="<?php echo base_url(); ?>index.php/admin/product/update/<?php echo $row->product_id; ?>" class="btn btn-danger" role="button">Update</a></td>
+                            <td><a href="<?php echo base_url(); ?>index.php/admin/product/detail/<?php echo $row->product_id; ?>" class="btn btn-danger" role="button">View</a></td>
                         </tr>
                     <?php } ?>
                 </tbody>

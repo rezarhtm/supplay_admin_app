@@ -53,7 +53,7 @@
             <div class="col-md-6">
             </div>
             <div class="col-md-12">
-                <a href="<?php echo base_url(); ?>index.php/product/" class="btn btn-danger" role="button">Kembali</a>
+                <a href="<?php echo base_url(); ?>index.php/admin/product/" class="btn btn-danger" role="button">Kembali</a>
             </div>
 
         </div>

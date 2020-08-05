@@ -5,7 +5,7 @@
             <h2>Horeka</h2>
         </div>
         <div>
-            <a href="<?php echo base_url(); ?>index.php/horeka/insert" class="btn btn-danger" role="button">Registrasi</a>
+            <a href="<?php echo base_url(); ?>index.php/admin/horeka/insert" class="btn btn-danger" role="button">Registrasi</a>
         </div>
     </div>
 
@@ -25,8 +25,8 @@
                         <tr>
                             <td><?php echo $row->horeka_id; ?></td>
                             <td><?php echo $row->h_name; ?></td>
-                            <td><a href="<?php echo base_url(); ?>index.php/horeka/update/<?php echo $row->horeka_id; ?>" class="btn btn-danger" role="button">Update</a></td>
-                            <td><a href="<?php echo base_url(); ?>index.php/horeka/detail/<?php echo $row->horeka_id; ?>" class="btn btn-danger" role="button">View</a></td>
+                            <td><a href="<?php echo base_url(); ?>index.php/admin/horeka/update/<?php echo $row->horeka_id; ?>" class="btn btn-danger" role="button">Update</a></td>
+                            <td><a href="<?php echo base_url(); ?>index.php/admin/horeka/detail/<?php echo $row->horeka_id; ?>" class="btn btn-danger" role="button">View</a></td>
                         </tr>
                     <?php } ?>
                 </tbody>

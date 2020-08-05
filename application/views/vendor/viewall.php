@@ -5,7 +5,7 @@
             <h2>Vendor</h2>
         </div>
         <div>
-            <a href="<?php echo base_url(); ?>index.php/vendor/insert" class="btn btn-success btn-reg" role="button">Registrasi</a>
+            <a href="<?php echo base_url(); ?>index.php/admin/vendor/insert" class="btn btn-success btn-reg" role="button">Registrasi</a>
         </div>
     </div>
 
@@ -25,8 +25,8 @@
                         <tr>
                             <td><?php echo $row->vendor_id; ?></td>
                             <td><?php echo $row->v_name; ?></td>
-                            <td><a href="<?php echo base_url(); ?>index.php/vendor/update/<?php echo $row->vendor_id; ?>" class="btn btn-danger" role="button">Update</a></td>
-                            <td><a href="<?php echo base_url(); ?>index.php/vendor/detail/<?php echo $row->vendor_id; ?>" class="btn btn-danger" role="button">View</a></td>
+                            <td><a href="<?php echo base_url(); ?>index.php/admin/vendor/update/<?php echo $row->vendor_id; ?>" class="btn btn-danger" role="button">Update</a></td>
+                            <td><a href="<?php echo base_url(); ?>index.php/admin/vendor/detail/<?php echo $row->vendor_id; ?>" class="btn btn-danger" role="button">View</a></td>
                         </tr>
                     <?php } ?>
                 </tbody>

@@ -5,7 +5,7 @@
             <h2>Kategori</h2>
         </div>
         <div>
-            <a href="<?php echo base_url(); ?>index.php/category/insert" class="btn btn-danger" role="button">Add New</a>
+            <a href="<?php echo base_url(); ?>index.php/admin/category/insert" class="btn btn-danger" role="button">Add New</a>
         </div>
     </div>
 
@@ -22,7 +22,7 @@
                     <?php foreach ($categories as $row) { ?>
                         <tr>
                             <td><?php echo $row->category_desc; ?></td>
-                            <td><a href="<?php echo base_url(); ?>index.php/category/update/<?php echo $row->category_id; ?>" class="btn btn-danger" role="button">Update</a></td>
+                            <td><a href="<?php echo base_url(); ?>index.php/admin/category/update/<?php echo $row->category_id; ?>" class="btn btn-danger" role="button">Update</a></td>
                         </tr>
                     <?php } ?>
                 </tbody>

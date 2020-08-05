@@ -26,11 +26,11 @@
     <div class="bg-light border-right" id="sidebar-wrapper">
       <div class="sidebar-heading"><a href="<?php echo base_url(); ?>index.php/">Supplay.id | Back Office</a></div>
       <ul class="list-group list-group-flush">
-        <li><a href="<?php echo base_url(); ?>index.php/vendor/" aria-expanded="false" class="list-group-item list-group-item-action bg-light">Vendor</a></li>
-        <li><a href="<?php echo base_url(); ?>index.php/horeka/" aria-expanded="false" class="list-group-item list-group-item-action bg-light">Horeka</a></li>
-        <li><a href="<?php echo base_url(); ?>index.php/product/" aria-expanded="false" class="list-group-item list-group-item-action bg-light">Produk</a></li>
-        <li><a href="<?php echo base_url(); ?>index.php/category/" aria-expanded="false" class="list-group-item list-group-item-action bg-light">Kategori</a></li>
-        <li><a href="<?php echo base_url(); ?>index.php/bank/" aria-expanded="false" class="list-group-item list-group-item-action bg-light">Bank</a></li>
+        <li><a href="<?php echo base_url(); ?>index.php/admin/vendor/" aria-expanded="false" class="list-group-item list-group-item-action bg-light">Vendor</a></li>
+        <li><a href="<?php echo base_url(); ?>index.php/admin/horeka/" aria-expanded="false" class="list-group-item list-group-item-action bg-light">Horeka</a></li>
+        <li><a href="<?php echo base_url(); ?>index.php/admin/product/" aria-expanded="false" class="list-group-item list-group-item-action bg-light">Produk</a></li>
+        <li><a href="<?php echo base_url(); ?>index.php/admin/category/" aria-expanded="false" class="list-group-item list-group-item-action bg-light">Kategori</a></li>
+        <li><a href="<?php echo base_url(); ?>index.php/admin/bank/" aria-expanded="false" class="list-group-item list-group-item-action bg-light">Bank</a></li>
       </ul>
     </div>
     <!-- /#sidebar-wrapper -->

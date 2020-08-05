@@ -85,7 +85,7 @@
 
   <div class="row mx-4 mb-4">
     <div class="col-md-12 backto">
-      <a href="<?php echo base_url(); ?>index.php/product" class="btn btn-danger" role="button">Kembali ke Daftar Produk</a>
+      <a href="<?php echo base_url(); ?>index.php/admin/product" class="btn btn-danger" role="button">Kembali ke Daftar Produk</a>
     </div>
   </div>
 
