@@ -36,6 +36,10 @@ class User extends CI_Model
         return $this->db->get_where("users", array("id" => $id, "deleted_at" => null))->row(0);
     }
 
+    public function findByUsername($username){
+        return $this->db->get_where("users", array("username" => $username, "deleted_at" => null))->row(0);
+    }
+
     /**
      * Find all data.
      *

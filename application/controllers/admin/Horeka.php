@@ -33,6 +33,7 @@ class Horeka extends CI_Controller {
     public function insert() {
         $this->load->model("HorekaModel");
         $this->load->model("BankModel");
+        $this->load->model("User");
         $this->load->helper('date');
         $data = array();
         $now = "Y-m-d H:i:s";
@@ -44,7 +45,7 @@ class Horeka extends CI_Controller {
                 'h_name' => $this->input->post('h_name'),
                 'h_npwp' => $this->input->post('h_npwp'),
                 'h_username' => $this->input->post('h_username'),
-                'h_password' => $this->input->post('h_username'),
+                // 'h_password' => $this->input->post('h_username'),
                 'h_pic_name' => $this->input->post('h_pic_name'),
                 'h_address' => $this->input->post('h_address'),
                 'h_biz_address' => $this->input->post('h_biz_address'),
@@ -64,7 +65,18 @@ class Horeka extends CI_Controller {
                 'updated_at' => date($now)
             );
 
-            if($this->HorekaModel->insert($data)) {
+            $user = $this->User->add(
+                [ 
+                    'name' => $data['h_name'], 
+                    'username' => $data['h_username'], 
+                    'password' => password_hash($this->input->post('h_password'), PASSWORD_BCRYPT), 
+                    'status' => 1, 
+                ]
+            );
+
+            $role = $this->User->addRoles($this->db->insert_id(), 2);
+
+            if($this->HorekaModel->insert($data) && $user && $role) {
                 $data["status"] = "success";
                 $data["message"] = "data added";
             }else{
@@ -82,7 +94,7 @@ class Horeka extends CI_Controller {
     public function update($horeka_id) {
         $this->load->model("HorekaModel");
         $this->load->model("BankModel");
-        $data['horeka']=$this->HorekaModel->getInfo('horeka_id', $horeka_id);
+        $this->load->model("User");
         $now = "Y-m-d H:i:s";
 
         if($this->input->method() == "post") 
@@ -90,7 +102,7 @@ class Horeka extends CI_Controller {
             $new['h_name'] = $this->input->post('h_name');
             $new['h_npwp'] = $this->input->post('h_npwp');
             $new['h_username'] = $this->input->post('h_username');
-            $new['h_password'] = $this->input->post('h_username');
+            // $new['h_password'] = $this->input->post('h_username');
             $new['h_pic_name'] = $this->input->post('h_pic_name');
             $new['h_address'] = $this->input->post('h_address');
             $new['h_biz_address'] = $this->input->post('h_biz_address');
@@ -108,9 +120,32 @@ class Horeka extends CI_Controller {
             $new['credit_score'] = $this->input->post('credit_score');
             $new['updated_at'] = date($now);
 
+            $user_id = $this->User->findByUsername($this->input->post('old_username'))->id;
+
+            if(empty($this->input->post('h_password'))){
+                $user = $this->User->edit(
+                    [
+                        'id' => $user_id,
+
+                        'name' => $new['h_name'], 
+                        'username' => $new['h_username']
+                    ]
+                );
+            }else{
+                $user = $this->User->edit(
+                    [ 
+                        'id' => $user_id,
+                        
+                        'name' => $new['h_name'], 
+                        'username' => $new['h_username'], 
+                        'password' => password_hash($this->input->post('h_password'), PASSWORD_BCRYPT), 
+                    ]
+                );
+            }
+
             $id = $this->HorekaModel->update($horeka_id, $new); 
 
-            if($id) {
+            if($user && $id) {
                 $data["status"] = "success";
                 $data["message"] = "data updated";
             }else{
@@ -120,6 +155,7 @@ class Horeka extends CI_Controller {
         }
 
         $data['bank'] = $this->BankModel->get();
+        $data['horeka']=$this->HorekaModel->getInfo('horeka_id', $horeka_id);
         
         $this->load->view("template/header");
         $this->load->view("horeka/updatehoreka", $data);

@@ -26,7 +26,12 @@
         </div>
         <div class="form-group">
           <label for="h_username">Username</label>
+          <input hidden required type="text" name="old_username" value="<?php echo $horeka['h_username']; ?>">
           <input class="form-control" id="h_username" required type="text" name="h_username" value="<?php echo $horeka['h_username']; ?>">
+        </div>
+        <div class="form-group">
+          <label for="h_password">Password</label>
+          <input class="form-control" id="h_password" type="password" name="h_password" value="">
         </div>
         <div class="form-group">
           <label for="h_pic_name">Nama Penanggungjawab</label>
