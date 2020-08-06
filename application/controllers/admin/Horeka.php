@@ -17,7 +17,7 @@ class Horeka extends CI_Controller {
             "horeka" => $this->HorekaModel->get()
         );
         $this->load->view("template/header");
-        $this->load->view("horeka/viewall", $data);
+        $this->load->view("admin/horeka/viewall", $data);
         $this->load->view("template/footer");
         
     }
@@ -27,7 +27,7 @@ class Horeka extends CI_Controller {
             'horeka' => $this->HorekaModel->detail($id)
         );
         $this->load->view("template/header");
-        $this->load->view("horeka/viewthis", $data);
+        $this->load->view("admin/horeka/viewthis", $data);
         $this->load->view("template/footer");
     }
     public function insert() {
@@ -88,7 +88,7 @@ class Horeka extends CI_Controller {
         $data['bank'] = $this->BankModel->get();
 
         $this->load->view("template/header");
-        $this->load->view("horeka/addhoreka", $data);
+        $this->load->view("admin/horeka/addhoreka", $data);
         $this->load->view("template/footer");
     }
     public function update($horeka_id) {
@@ -158,13 +158,13 @@ class Horeka extends CI_Controller {
         $data['horeka']=$this->HorekaModel->getInfo('horeka_id', $horeka_id);
         
         $this->load->view("template/header");
-        $this->load->view("horeka/updatehoreka", $data);
+        $this->load->view("admin/horeka/updatehoreka", $data);
         $this->load->view("template/footer");
     }
     public function detailhoreka($horeka_id){
         $data['horeka']=$this->HorekaModel->getInfo('horeka_id',$horeka_id);
         $this->load->view("template/header");
-        $this->load->view("horeka/updatehoreka", $data);
+        $this->load->view("admin/horeka/updatehoreka", $data);
         $this->load->view("template/footer");
     }
 }

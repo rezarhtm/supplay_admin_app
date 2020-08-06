@@ -16,7 +16,7 @@ class Category extends CI_Controller {
             'categories' => $this->category_entry->get()
         );
         $this->load->view("template/header");
-        $this->load->view("category/viewall", $data);
+        $this->load->view("admin/category/viewall", $data);
         $this->load->view("template/footer");
     }
     public function insert() {
@@ -42,7 +42,7 @@ class Category extends CI_Controller {
             }
         }
         $this->load->view("template/header");
-        $this->load->view("category/addcategory", $data);
+        $this->load->view("admin/category/addcategory", $data);
         $this->load->view("template/footer");
     }
 
@@ -68,13 +68,13 @@ class Category extends CI_Controller {
         }
         
         $this->load->view("template/header");
-        $this->load->view("category/updatecategory", $data);
+        $this->load->view("admin/category/updatecategory", $data);
         $this->load->view("template/footer");
     }
     public function detailCategory($category_id){
         $data['category']=$this->category_entry->getInfo('category_id',$category_id);
         $this->load->view("template/header");
-        $this->load->view("category/updatecategory", $data);
+        $this->load->view("admin/category/updatecategory", $data);
         $this->load->view("template/footer");
     }
     

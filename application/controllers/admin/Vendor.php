@@ -17,7 +17,7 @@ class Vendor extends CI_Controller{
             'vendor' => $this->VendorModel->get()
         );
         $this->load->view("template/header");
-        $this->load->view("vendor/viewall", $data);
+        $this->load->view("admin/vendor/viewall", $data);
         $this->load->view("template/footer");
     }
     public function detail($id) {
@@ -26,7 +26,7 @@ class Vendor extends CI_Controller{
             'vendor' => $this->VendorModel->detail($id)
         );
         $this->load->view("template/header");
-        $this->load->view("vendor/viewthis", $data);
+        $this->load->view("admin/vendor/viewthis", $data);
         $this->load->view("template/footer");
     }
     public function insert() {
@@ -75,7 +75,7 @@ class Vendor extends CI_Controller{
         $data['bank'] = $this->BankModel->get();
 
         $this->load->view("template/header");
-        $this->load->view("vendor/addvendor", $data);
+        $this->load->view("admin/vendor/addvendor", $data);
         $this->load->view("template/footer");
     }
     public function update($vendor_id) {
@@ -120,13 +120,13 @@ class Vendor extends CI_Controller{
         $data['bank'] = $this->BankModel->get();
         
         $this->load->view("template/header");
-        $this->load->view("vendor/updatevendor", $data);
+        $this->load->view("admin/vendor/updatevendor", $data);
         $this->load->view("template/footer");
     }
     public function detailvendor($vendor_id){
         $data['vendor']=$this->VendorModel->getInfo('vendor_id',$vendor_id);
         $this->load->view("template/header");
-        $this->load->view("vendor/updatevendor", $data);
+        $this->load->view("admin/vendor/updatevendor", $data);
         $this->load->view("template/footer");
     }
 }

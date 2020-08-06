@@ -17,7 +17,7 @@ class Bank extends CI_Controller{
             "banks" => $this->BankModel->get()
         );
         $this->load->view("template/header");
-        $this->load->view("bank/viewall", $data);
+        $this->load->view("admin/bank/viewall", $data);
         $this->load->view("template/footer");        
     }
 
@@ -44,7 +44,7 @@ class Bank extends CI_Controller{
             }
         }
         $this->load->view("template/header");
-        $this->load->view("bank/addbank", $data);
+        $this->load->view("admin/bank/addbank", $data);
         $this->load->view("template/footer");
     }
 
@@ -70,13 +70,13 @@ class Bank extends CI_Controller{
         }
         
         $this->load->view("template/header");
-        $this->load->view("bank/updatebank", $data);
+        $this->load->view("admin/bank/updatebank", $data);
         $this->load->view("template/footer");
     }
     public function detailBank($bank_id){
         $data['bank']=$this->BankModel->getInfo('bank_id',$bank_id);
         $this->load->view("template/header");
-        $this->load->view("bank/updatebank", $data);
+        $this->load->view("admin/bank/updatebank", $data);
         $this->load->view("template/footer");
     }
 

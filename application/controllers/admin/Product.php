@@ -17,7 +17,7 @@ class Product extends CI_Controller {
             "product" => $this->ProductModel->get()
         );
         $this->load->view("template/header");
-        $this->load->view("product/viewall", $data);
+        $this->load->view("admin/product/viewall", $data);
         $this->load->view("template/footer");
         
     }
@@ -27,7 +27,7 @@ class Product extends CI_Controller {
             'product' => $this->ProductModel->detail($id)
         );
         $this->load->view("template/header");
-        $this->load->view("product/viewthis", $data);
+        $this->load->view("admin/product/viewthis", $data);
         $this->load->view("template/footer");
     }
     public function insert() {
@@ -72,7 +72,7 @@ class Product extends CI_Controller {
 
 
         $this->load->view("template/header");
-        $this->load->view("product/addproduct", $data);
+        $this->load->view("admin/product/addproduct", $data);
         $this->load->view("template/footer");
     }
 
@@ -109,13 +109,13 @@ class Product extends CI_Controller {
         $data['category_get'] = $this->ProductModel->getCategory();
         
         $this->load->view("template/header");
-        $this->load->view("product/updateproduct", $data);
+        $this->load->view("admin/product/updateproduct", $data);
         $this->load->view("template/footer");
     }
     public function detailproduct($product_id){
         $data['product']=$this->ProductModel->getInfo('product_id',$product_id);
         $this->load->view("template/header");
-        $this->load->view("product/updateproduct", $data);
+        $this->load->view("admin/product/updateproduct", $data);
         $this->load->view("template/footer");
     }
 }
