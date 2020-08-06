@@ -16,9 +16,9 @@ class Horeka extends CI_Controller {
         $data = array(
             "horeka" => $this->HorekaModel->get()
         );
-        $this->load->view("template/header");
+        $this->load->view("template/admin/header");
         $this->load->view("admin/horeka/viewall", $data);
-        $this->load->view("template/footer");
+        $this->load->view("template/admin/footer");
         
     }
     public function detail($id) {
@@ -26,9 +26,9 @@ class Horeka extends CI_Controller {
         $data = array (
             'horeka' => $this->HorekaModel->detail($id)
         );
-        $this->load->view("template/header");
+        $this->load->view("template/admin/header");
         $this->load->view("admin/horeka/viewthis", $data);
-        $this->load->view("template/footer");
+        $this->load->view("template/admin/footer");
     }
     public function insert() {
         $this->load->model("HorekaModel");
@@ -87,9 +87,9 @@ class Horeka extends CI_Controller {
 
         $data['bank'] = $this->BankModel->get();
 
-        $this->load->view("template/header");
+        $this->load->view("template/admin/header");
         $this->load->view("admin/horeka/addhoreka", $data);
-        $this->load->view("template/footer");
+        $this->load->view("template/admin/footer");
     }
     public function update($horeka_id) {
         $this->load->model("HorekaModel");
@@ -157,15 +157,15 @@ class Horeka extends CI_Controller {
         $data['bank'] = $this->BankModel->get();
         $data['horeka']=$this->HorekaModel->getInfo('horeka_id', $horeka_id);
         
-        $this->load->view("template/header");
+        $this->load->view("template/admin/header");
         $this->load->view("admin/horeka/updatehoreka", $data);
-        $this->load->view("template/footer");
+        $this->load->view("template/admin/footer");
     }
     public function detailhoreka($horeka_id){
         $data['horeka']=$this->HorekaModel->getInfo('horeka_id',$horeka_id);
-        $this->load->view("template/header");
+        $this->load->view("template/admin/header");
         $this->load->view("admin/horeka/updatehoreka", $data);
-        $this->load->view("template/footer");
+        $this->load->view("template/admin/footer");
     }
 }
 

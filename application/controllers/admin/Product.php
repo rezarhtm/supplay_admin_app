@@ -16,9 +16,9 @@ class Product extends CI_Controller {
         $data = array(
             "product" => $this->ProductModel->get()
         );
-        $this->load->view("template/header");
+        $this->load->view("template/admin/header");
         $this->load->view("admin/product/viewall", $data);
-        $this->load->view("template/footer");
+        $this->load->view("template/admin/footer");
         
     }
     public function detail($id) {
@@ -26,9 +26,9 @@ class Product extends CI_Controller {
         $data = array (
             'product' => $this->ProductModel->detail($id)
         );
-        $this->load->view("template/header");
+        $this->load->view("template/admin/header");
         $this->load->view("admin/product/viewthis", $data);
-        $this->load->view("template/footer");
+        $this->load->view("template/admin/footer");
     }
     public function insert() {
         $this->load->model("ProductModel");
@@ -71,9 +71,9 @@ class Product extends CI_Controller {
         $data['category_get'] = $this->ProductModel->getCategory();
 
 
-        $this->load->view("template/header");
+        $this->load->view("template/admin/header");
         $this->load->view("admin/product/addproduct", $data);
-        $this->load->view("template/footer");
+        $this->load->view("template/admin/footer");
     }
 
     public function update($product_id) {
@@ -108,15 +108,15 @@ class Product extends CI_Controller {
         $data['vendor_get'] = $this->ProductModel->getVendor();
         $data['category_get'] = $this->ProductModel->getCategory();
         
-        $this->load->view("template/header");
+        $this->load->view("template/admin/header");
         $this->load->view("admin/product/updateproduct", $data);
-        $this->load->view("template/footer");
+        $this->load->view("template/admin/footer");
     }
     public function detailproduct($product_id){
         $data['product']=$this->ProductModel->getInfo('product_id',$product_id);
-        $this->load->view("template/header");
+        $this->load->view("template/admin/header");
         $this->load->view("admin/product/updateproduct", $data);
-        $this->load->view("template/footer");
+        $this->load->view("template/admin/footer");
     }
 }
 

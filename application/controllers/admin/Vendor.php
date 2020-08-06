@@ -16,18 +16,18 @@ class Vendor extends CI_Controller{
         $data = array(
             'vendor' => $this->VendorModel->get()
         );
-        $this->load->view("template/header");
+        $this->load->view("template/admin/header");
         $this->load->view("admin/vendor/viewall", $data);
-        $this->load->view("template/footer");
+        $this->load->view("template/admin/footer");
     }
     public function detail($id) {
         $this->load->model('VendorModel');
         $data = array (
             'vendor' => $this->VendorModel->detail($id)
         );
-        $this->load->view("template/header");
+        $this->load->view("template/admin/header");
         $this->load->view("admin/vendor/viewthis", $data);
-        $this->load->view("template/footer");
+        $this->load->view("template/admin/footer");
     }
     public function insert() {
         $this->load->model("VendorModel");
@@ -74,9 +74,9 @@ class Vendor extends CI_Controller{
 
         $data['bank'] = $this->BankModel->get();
 
-        $this->load->view("template/header");
+        $this->load->view("template/admin/header");
         $this->load->view("admin/vendor/addvendor", $data);
-        $this->load->view("template/footer");
+        $this->load->view("template/admin/footer");
     }
     public function update($vendor_id) {
         $this->load->model("VendorModel");
@@ -119,15 +119,15 @@ class Vendor extends CI_Controller{
 
         $data['bank'] = $this->BankModel->get();
         
-        $this->load->view("template/header");
+        $this->load->view("template/admin/header");
         $this->load->view("admin/vendor/updatevendor", $data);
-        $this->load->view("template/footer");
+        $this->load->view("template/admin/footer");
     }
     public function detailvendor($vendor_id){
         $data['vendor']=$this->VendorModel->getInfo('vendor_id',$vendor_id);
-        $this->load->view("template/header");
+        $this->load->view("template/admin/header");
         $this->load->view("admin/vendor/updatevendor", $data);
-        $this->load->view("template/footer");
+        $this->load->view("template/admin/footer");
     }
 }
 

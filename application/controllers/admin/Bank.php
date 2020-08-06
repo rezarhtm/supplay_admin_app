@@ -16,9 +16,9 @@ class Bank extends CI_Controller{
         $data = array(
             "banks" => $this->BankModel->get()
         );
-        $this->load->view("template/header");
+        $this->load->view("template/admin/header");
         $this->load->view("admin/bank/viewall", $data);
-        $this->load->view("template/footer");        
+        $this->load->view("template/admin/footer");        
     }
 
     public function insert() {
@@ -43,9 +43,9 @@ class Bank extends CI_Controller{
                 $data["message"] = "data lost";
             }
         }
-        $this->load->view("template/header");
+        $this->load->view("template/admin/header");
         $this->load->view("admin/bank/addbank", $data);
-        $this->load->view("template/footer");
+        $this->load->view("template/admin/footer");
     }
 
     public function update($bank_id) {
@@ -69,15 +69,15 @@ class Bank extends CI_Controller{
             }
         }
         
-        $this->load->view("template/header");
+        $this->load->view("template/admin/header");
         $this->load->view("admin/bank/updatebank", $data);
-        $this->load->view("template/footer");
+        $this->load->view("template/admin/footer");
     }
     public function detailBank($bank_id){
         $data['bank']=$this->BankModel->getInfo('bank_id',$bank_id);
-        $this->load->view("template/header");
+        $this->load->view("template/admin/header");
         $this->load->view("admin/bank/updatebank", $data);
-        $this->load->view("template/footer");
+        $this->load->view("template/admin/footer");
     }
 
 }
