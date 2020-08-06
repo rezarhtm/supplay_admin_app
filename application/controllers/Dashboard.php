@@ -12,9 +12,9 @@ class Dashboard extends CI_Controller
 	
 	public function index(){
 		if(hasRole('admin')){
-			return redirect('admin/home');
+			return redirect('admin');
 		}else if(hasRole('horeka')){
-			return redirect('horeka/home');
+			return redirect('horeka');
 		}else{
 			return redirect('login');
 		}
