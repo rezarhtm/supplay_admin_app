@@ -143,7 +143,7 @@ class Auth
             "loginStatus" => true
         ));
 
-        return redirect("home");
+        return redirect("dashboard");
     }
 
     /**
