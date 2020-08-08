@@ -37,7 +37,7 @@
         var id = data[1];
         $.ajax({
             method: "GET",
-            url: `api/products/detail/${id}`
+            url: `horeka/api/products/detail/${id}`
           })
           .done(function(data) {
             var d = JSON.parse(data);
