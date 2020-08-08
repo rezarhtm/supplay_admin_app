@@ -11,7 +11,6 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 <head>
     <meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    <meta name="author" content="Firoz Ahmad Likhon <likh.deshi@gmail.com>"/>
     <title>Login</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
           integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
@@ -79,7 +78,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 <form class="form-signin" method="post" id="loginForm" action="<?= site_url('login') ?>">
     <input type="hidden" name="<?= $this->security->get_csrf_token_name(); ?>"
            value="<?= $this->security->get_csrf_hash(); ?>">
-    <h1 class="h3 mb-3 font-weight-normal">Please sign in</h1>
+    <h1 class="h3 mb-3 font-weight-normal">
+        Login
+    </h1>
     <?= isset($failed) && !empty($failed) ? "<p class='err'>{$failed}</p>" : ""; ?>
     <?= $this->session->flashdata('success'); ?>
 
@@ -100,7 +101,6 @@ defined('BASEPATH') OR exit('No direct script access allowed');
     </div>
 
     <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
-    <p class="mt-5 mb-3 text-muted">&copy; 2017-2018 <a href="https://github.com/firoz-ahmad-likhon">Likhon</a></p>
 </form>
 </body>
 </html>
