@@ -1,5 +1,13 @@
 <div class="container my-4">
 	<div class="row">
+		<div class="col-md-3">
+			<div>
+				Atas: data horeka (query dari tabel horeka)
+			</div>
+			<div>
+				Bawah: berisi tagihan tagihan ( Jika credit scoring bernilai 1, maka horeka hanya punya 1 slot tagihan yang aktif. Berlaku sejumlah kelipatan )
+			</div>
+		</div>
 		<div class="col-md-9">
 			<!-- <div>
 				<h4>
@@ -152,14 +160,6 @@
 						</tr>
 					</thead>
 				</table>
-			</div>
-		</div>
-		<div class="col-md-3">
-			<div>
-				Atas: data horeka (query dari tabel horeka)
-			</div>
-			<div>
-				Bawah: berisi tagihan tagihan ( Jika credit scoring bernilai 1, maka horeka hanya punya 1 slot tagihan yang aktif. Berlaku sejumlah kelipatan )
 			</div>
 		</div>
 	</div>
