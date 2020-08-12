@@ -12,7 +12,7 @@
 
   <!-- Bootstrap core CSS -->
   <link rel="stylesheet" href="<?php echo base_url("public/style.css"); ?>">
-	
+
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
   <link rel="stylesheet" href="https://cdn.datatables.net/1.10.21/css/jquery.dataTables.min.css">
 </head>
@@ -30,6 +30,12 @@
         <li><a href="<?php echo base_url(); ?>index.php/admin/product/" aria-expanded="false" class="list-group-item list-group-item-action bg-light">Produk</a></li>
         <li><a href="<?php echo base_url(); ?>index.php/admin/category/" aria-expanded="false" class="list-group-item list-group-item-action bg-light">Kategori</a></li>
         <li><a href="<?php echo base_url(); ?>index.php/admin/bank/" aria-expanded="false" class="list-group-item list-group-item-action bg-light">Bank</a></li>
+
+        <hr />
+        <div style="position: absolute; display: inline-block; bottom: 0;">
+          <li class="list-group-item list-group-item-action bg-light"><?= $this->auth->userName ?></li>
+          <li><a href="<?php echo base_url(); ?>index.php/login/logout" aria-expanded="false" class="list-group-item list-group-item-action bg-light">Logout</a></li>
+        </div>
       </ul>
     </div>
     <!-- /#sidebar-wrapper -->

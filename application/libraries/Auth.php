@@ -51,7 +51,7 @@ class Auth
     {
         if ($this->CI->session->has_userdata("userID") && $this->CI->session->loginStatus) {
             $this->userID = $this->CI->session->userID;
-            $this->userName = $this->CI->session->userName;
+            $this->userName = $this->CI->session->username;
             $this->roles = $this->CI->session->roles;
             $this->loginStatus = true;
         }
