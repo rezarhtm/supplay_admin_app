@@ -30,12 +30,13 @@
         <li><a href="<?php echo base_url(); ?>index.php/admin/product/" aria-expanded="false" class="list-group-item list-group-item-action bg-light">Produk</a></li>
         <li><a href="<?php echo base_url(); ?>index.php/admin/category/" aria-expanded="false" class="list-group-item list-group-item-action bg-light">Kategori</a></li>
         <li><a href="<?php echo base_url(); ?>index.php/admin/bank/" aria-expanded="false" class="list-group-item list-group-item-action bg-light">Bank</a></li>
-
-        <hr />
-        <div style="position: absolute; display: inline-block; bottom: 0;">
-          <li class="list-group-item list-group-item-action bg-light"><?= $this->auth->userName ?></li>
-          <li><a href="<?php echo base_url(); ?>index.php/login/logout" aria-expanded="false" class="list-group-item list-group-item-action bg-light">Logout</a></li>
-        </div>
+      </ul>
+      <ul class="list-group list-group-flush" style="position: absolute; display: inline-block; bottom: 0;">
+        <li class="list-group-item list-group-item-action bg-primary text-white">
+          <!-- <span class="badge badge-primary" style="font-size: 1rem;"><?= $this->auth->userName ?></span> -->
+          <?= $this->auth->userName ?>
+        </li>
+        <li><a href="<?php echo base_url(); ?>index.php/login/logout" aria-expanded="false" class="list-group-item list-group-item-action bg-light">Logout</a></li>
       </ul>
     </div>
     <!-- /#sidebar-wrapper -->
