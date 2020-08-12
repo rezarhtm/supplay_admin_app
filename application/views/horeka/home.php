@@ -73,8 +73,8 @@
 									<span class="font-weight-bold">
 										Kategori
 									</span>
-									<span id="detail_category_id" class="float-right">
-										detail_category_id
+									<span id="detail_category_desc" class="float-right">
+										detail_category_desc
 									</span>
 								</div>
 

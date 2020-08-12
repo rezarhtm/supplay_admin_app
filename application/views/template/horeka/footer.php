@@ -25,7 +25,7 @@
         $("#detail_product_name").text("");
         // $("#detail_vendor_id").text("");
         $("#detail_product_desc").text("");
-        $("#detail_category_id").text("");
+        $("#detail_category_desc").text("");
         $("#detail_qty").text("");
         $("#detail_unit").text("");
         $("#detail_price_perunit").text("");
@@ -35,7 +35,7 @@
 
 
         var data = dt.row($(this).parents('tr')).data();
-        var id = data[1];
+        var id = data[0];
         $.ajax({
             method: "GET",
             url: `horeka/api/products/detail/${id}`
@@ -46,7 +46,7 @@
             $("#detail_product_name").text(d.product_name);
             // $("#detail_vendor_id").text(d.vendor_id);
             $("#detail_product_desc").text(d.product_desc);
-            $("#detail_category_id").text(d.category_id);
+            $("#detail_category_desc").text(d.category_desc);
             $("#detail_qty").text(d.qty);
             $("#detail_unit").text(d.unit);
             $("#detail_price_perunit").text(d.price_perunit);

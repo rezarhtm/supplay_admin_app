@@ -23,9 +23,13 @@ class ProductModel extends CI_Model
     // }
     public function detail($id)
     {
-
-        $this->db->where('product_id', $id);
-        return $this->db->get('products')->result();
+        $this->db->where('products.product_id', $id);
+        return $this->db
+        // ->select('products.*, category.category_desc')
+        ->from('products')
+        ->join('category', 'category.category_id = products.category_id')
+        ->get()
+        ->result();
     }
     public function insert($data = array())
     {

@@ -23,7 +23,7 @@
                         </tr>
                         <tr>
                             <th>Kategori</th>
-                            <td><?php echo $row->category_id; ?></td>
+                            <td><?php echo $row->category_desc; ?></td>
                         </tr>
                         <tr>
                             <th>Jumlah / kuantitas</th>
