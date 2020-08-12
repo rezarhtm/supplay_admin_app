@@ -32,23 +32,31 @@
 			</div>
 			<div>
 				<div class="modal" tabindex="-1" id="info_produk" role="dialog">
-					<div class="modal-dialog" role="document">
+					<div class="modal-dialog modal-lg" role="document">
 						<div class="modal-content">
-							<div class="modal-header">
+							<!-- <div class="modal-header">
 								<h5 class="modal-title" id="detail_product_name">
 									detail_product_name [ detail_product_id ]
 								</h5>
 								<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 									<span aria-hidden="true">&times;</span>
 								</button>
-							</div>
+							</div> -->
 							<div class="modal-body">
-								<div class="my-1">
+								<!-- <div class="my-1">
 									<span class="font-weight-bold">
 										Vendor ID
 									</span>
 									<span id="detail_vendor_id" class="float-right">
 										detail_vendor_id
+									</span>
+								</div> -->
+								<div class="my-1">
+									<span class="font-weight-bold">
+										Nama Produk
+									</span>
+									<span id="detail_product_name" class="float-right">
+										detail_product_name
 									</span>
 								</div>
 
@@ -97,7 +105,7 @@
 									</span>
 								</div>
 
-								<div class="my-1">
+								<!-- <div class="my-1">
 									<span class="font-weight-bold">
 										Status
 									</span>
@@ -113,7 +121,7 @@
 									<span id="detail_updated_at" class="float-right">
 										detail_updated_at
 									</span>
-								</div>
+								</div> -->
 
 								<div class="mt-3 form-group">
 									<label for="buy_qty">
@@ -135,7 +143,7 @@
 				<table class="table" id="datatable">
 					<thead>
 						<tr>
-							<th scope="col">No</th>
+							<!-- <th scope="col">No</th> -->
 							<th scope="col">ID</th>
 							<th scope="col">Nama Produk</th>
 							<th scope="col">Harga Per Unit</th>

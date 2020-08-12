@@ -21,7 +21,7 @@ class Products extends CI_Controller{
         foreach ($list as $field) {
             $no++;
             $row = array();
-            $row[] = $no;
+            // $row[] = $no;
             $row[] = $field->product_id;
             $row[] = $field->product_name;
 			$row[] = $field->price_perunit;
