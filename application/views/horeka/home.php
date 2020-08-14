@@ -9,24 +9,102 @@
 			</div>
 		</div>
 		<div class="col-md-9">
-			<!-- <div>
-				<h4>
-					Shopping List
-				</h4>
-				<div>
-					<div class="row">
-						<div class="col-3">
-							List 1
-						</div>
-						<div class="col-3">
-							List 1
-						</div>
-						<div class="col-3">
-							List 1
+			<!-- Create Shopping List Modal -->
+			<form method="POST">
+				<div class="modal" tabindex="-1" id="create_shopping_list_modal" role="dialog">
+					<div class="modal-dialog" role="document">
+						<div class="modal-content">
+							<div class="modal-header">
+								<h5 class="modal-title">
+									Create Shopping List
+								</h5>
+								<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+									<span aria-hidden="true">&times;</span>
+								</button>
+							</div>
+							<div class="modal-body">
+								<div class="form-group">
+									<label for="">
+										Nama Shopping List
+									</label>
+									<input required type="text" name="shopping_list" class="form-control">
+
+									<input type="text" value="create" name="status" hidden>
+								</div>
+							</div>
+							<div class="modal-footer">
+								<button type="submit" class="btn btn-primary">Create</button>
+								<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+							</div>
 						</div>
 					</div>
 				</div>
-			</div> -->
+			</form>
+			<!-- Create Shopping List Modal -->
+
+			<!-- Update Shopping List Modal -->
+			<form method="POST">
+				<div class="modal" tabindex="-1" id="update_shopping_list_modal" role="dialog">
+					<div class="modal-dialog" role="document">
+						<div class="modal-content">
+							<div class="modal-header">
+								<h5 class="modal-title">
+									Update Shopping List
+								</h5>
+								<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+									<span aria-hidden="true">&times;</span>
+								</button>
+							</div>
+							<div class="modal-body">
+								<div class="form-group">
+									<label for="update_shopping_list_data">
+										Nama Shopping List
+									</label>
+									<input type="text" id="update_shopping_list_id" name="shopping_list_id" hidden>
+									<input required type="text" name="shopping_list" id="update_shopping_list_data" class="form-control">
+
+									<input type="text" value="update" name="status" hidden>
+								</div>
+							</div>
+							<div class="modal-footer">
+								<button type="submit" class="btn btn-primary">Update</button>
+								<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+							</div>
+						</div>
+					</div>
+				</div>
+			</form>
+			<!-- Update Shopping List Modal -->
+			<h4>
+				Shopping List
+			</h4>
+			<div class="mb-4">
+				<ul class="list-group">
+					<?php foreach ($shopping_list as $list) : ?>
+						<li class="list-group-item">
+							<div>
+								<?= $list->name ?>
+							</div>
+							<div class="float-right">
+								<button class="btn btn-primary w-100 my-1" onclick="showEditShoppingListModal({id: <?= $list->id ?>, name: '<?= $list->name ?>'})">
+									Edit
+								</button>
+
+								<form method="post">
+									<input type="text" value="delete" name="status" hidden>
+									<input type="text" value="<?= $list->id ?>" name="shopping_list_id" hidden>
+									<button onclick="return confirm('Hapus <?= $list->name ?>?')" class="btn btn-danger w-100 my-1" type="submit">
+										Hapus
+									</button>
+								</form>
+							</div>
+						</li>
+					<?php endforeach ?>
+				</ul>
+				<button class="btn btn-primary w-100 my-1" data-toggle="modal" data-target="#create_shopping_list_modal">
+					Create
+				</button>
+			</div>
 			<div>
 				<h4>
 					Cari Produk
@@ -164,3 +242,17 @@
 		</div>
 	</div>
 </div>
+
+<script>
+	$("#menu-toggle").click(function(e) {
+		e.preventDefault();
+		$("#wrapper").toggleClass("toggled");
+	});
+
+	function showEditShoppingListModal(data){
+		$("#update_shopping_list_id").val(data.id);
+		$("#update_shopping_list_data").val(data.name);
+
+		$("#update_shopping_list_modal").modal();
+	}
+</script>

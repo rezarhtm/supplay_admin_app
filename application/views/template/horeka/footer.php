@@ -61,11 +61,6 @@
         e.preventDefault()
       })
     });
-
-    $("#menu-toggle").click(function(e) {
-      e.preventDefault();
-      $("#wrapper").toggleClass("toggled");
-    });
   </script>
   </body>
 
