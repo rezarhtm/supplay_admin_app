@@ -12,7 +12,17 @@
 		// 	return $this->db->get($this->table)->result();
 		// }
 
-		public function find($shopping_list_id, $product_id){
+		public function find($shopping_list_id){
+			return $this->db
+			->select('products.*, shopping_products_list.qty AS products_list_qty, shopping_list.name AS shopping_list_name')
+			->from($this->table)
+			->where('shopping_list_id', $shopping_list_id)
+			->join('products', 'products.product_id = shopping_products_list.product_id')
+			->join('shopping_list', 'shopping_list.id = shopping_products_list.shopping_list_id')
+			->get()->result();
+		}
+
+		public function findProduct($shopping_list_id, $product_id){
 			return $this->db
 			->from($this->table)
 			->where('shopping_list_id', $shopping_list_id)
@@ -40,7 +50,7 @@
 			return $this->db->affected_rows();
 		}
 
-		// public function delete($data){
-		// 	return $this->db->delete($this->table, $data);
-		// }
+		public function delete($data){
+			return $this->db->delete($this->table, $data);
+		}
 	}

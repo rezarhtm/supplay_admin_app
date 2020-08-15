@@ -82,7 +82,7 @@ class Home extends CI_Controller
                             'qty' => $this->input->post('buy_qty')
                         ];
 
-                        $shopping_products_list = $this->ShoppingProductsListModel->find($data['shopping_list_id'], $data['product_id']);
+                        $shopping_products_list = $this->ShoppingProductsListModel->findProduct($data['shopping_list_id'], $data['product_id']);
                         $shopping_products_list_count = $this->ShoppingProductsListModel->count($data['shopping_list_id'], $data['product_id']);
 
                         if ($shopping_products_list_count > 0) {

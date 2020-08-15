@@ -282,7 +282,7 @@
 	}
 
 	function showShoppingProductsList(id) {
-		location.href = `<?= base_url() ?>index.php/horeka/shopping-list/${id}`;
+		location.href = `<?= base_url() ?>index.php/horeka/shoppinglist/detail/${id}`;
 	}
 
 	$(document).ready(function() {
