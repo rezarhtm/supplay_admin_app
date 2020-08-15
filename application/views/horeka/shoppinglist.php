@@ -46,7 +46,7 @@
 											<?= $list->product_name ?>
 										</td>
 										<td>
-											<?= $list->price_perunit ?>
+											<?= number_format($list->price_perunit) ?>
 										</td>
 										<td>
 											<input type="number" name="qty[]" class="form-control" value="0">
