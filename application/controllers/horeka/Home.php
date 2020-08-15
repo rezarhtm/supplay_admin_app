@@ -13,8 +13,8 @@ class Home extends CI_Controller
 
         $this->load->model('ProductModel');
 
-        $this->load->model('horeka/ShoppingList');
-        $this->load->model('horeka/ShoppingProductsList');
+        $this->load->model('horeka/ShoppingListModel');
+        $this->load->model('horeka/ShoppingProductsListModel');
         $this->load->model('horeka/CartModel');
     }
 
@@ -29,7 +29,7 @@ class Home extends CI_Controller
                             'name' => $this->input->post('shopping_list')
                         ];
 
-                        if ($this->ShoppingList->create($data)) {
+                        if ($this->ShoppingListModel->create($data)) {
                             $data["status"] = "success";
                             $data["message"] = "data added";
                         } else {
@@ -45,7 +45,7 @@ class Home extends CI_Controller
                             'name' => $this->input->post('shopping_list')
                         ];
 
-                        if ($this->ShoppingList->update($id, $data)) {
+                        if ($this->ShoppingListModel->update($id, $data)) {
                             $data["status"] = "success";
                             $data["message"] = "data updated";
                         } else {
@@ -58,7 +58,7 @@ class Home extends CI_Controller
                             'id' => $this->input->post('shopping_list_id')
                         ];
 
-                        if ($this->ShoppingList->delete($data)) {
+                        if ($this->ShoppingListModel->delete($data)) {
                             $data["status"] = "success";
                             $data["message"] = "data deleted";
                         } else {
@@ -82,17 +82,37 @@ class Home extends CI_Controller
                             'qty' => $this->input->post('buy_qty')
                         ];
 
-                        if ($product_qty >= $data['qty']) {
-                            if ($this->ShoppingProductsList->insert($data)) {
-                                $data["status"] = "success";
-                                $data["message"] = "ditambahkan ke shopping list " . $this->ShoppingList->find($this->input->post('add_to_list_id'))['name'];
+                        $shopping_products_list = $this->ShoppingProductsListModel->find($data['shopping_list_id'], $data['product_id']);
+                        $shopping_products_list_count = $this->ShoppingProductsListModel->count($data['shopping_list_id'], $data['product_id']);
+
+                        if ($shopping_products_list_count > 0) {
+                            $shopping_list_id = $data['shopping_list_id'];
+                            $product_id = $data['product_id'];
+
+                            $data = [
+                                'qty' => $shopping_products_list['qty'] + $this->input->post('buy_qty')
+                            ];
+
+                            if ($product_qty >= $data['qty']) {
+                                if ($this->ShoppingProductsListModel->update($shopping_list_id, $product_id, $data)) {
+                                    $data["status"] = "success";
+                                    $data["message"] = "ditambahkan ke shopping list " . $this->ShoppingListModel->find($this->input->post('add_to_list_id'))['name'];
+                                } else {
+                                    $data["status"] = "danger";
+                                    $data["message"] = "shopping list lost";
+                                }
                             } else {
                                 $data["status"] = "danger";
-                                $data["message"] = "gagal";
+                                $data["message"] = "stok tidak mencukupi";
                             }
                         } else {
-                            $data["status"] = "danger";
-                            $data["message"] = "stok tidak mencukupi";
+                            if ($this->ShoppingProductsListModel->insert($data)) {
+                                $data["status"] = "success";
+                                $data["message"] = "ditambahkan ke shopping list " . $this->ShoppingListModel->find($this->input->post('add_to_list_id'))['name'];
+                            } else {
+                                $data["status"] = "danger";
+                                $data["message"] = "shopping list lost";
+                            }
                         }
 
                         break;
@@ -142,7 +162,7 @@ class Home extends CI_Controller
             }
         }
 
-        $data['shopping_list'] = $this->ShoppingList->get();
+        $data['shopping_list'] = $this->ShoppingListModel->get();
 
         $this->load->view('template/horeka/header');
         $this->load->view('horeka/home', $data);

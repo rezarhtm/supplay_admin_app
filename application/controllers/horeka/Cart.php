@@ -13,8 +13,8 @@ class Cart extends CI_Controller
 
 		// $this->load->model('ProductModel');
 
-		// $this->load->model('horeka/ShoppingList');
-		// $this->load->model('horeka/ShoppingProductsList');
+		// $this->load->model('horeka/ShoppingListModel');
+		// $this->load->model('horeka/ShoppingProductsListModel');
 		$this->load->model('horeka/CartModel');
 	}
 

@@ -1,5 +1,5 @@
 <?php 
-	class ShoppingList extends CI_Model {
+	class ShoppingListModel extends CI_Model {
 		var $table = "shopping_list";
 
 		public function __construct(){
