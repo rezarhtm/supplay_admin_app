@@ -73,38 +73,18 @@ class Home extends CI_Controller
             if ($this->input->post('add_to')) {
                 $product_qty = $this->ProductModel->getInfo('product_id', $this->input->post('buy_product_id'))['qty'];
 
-
                 switch ($this->input->post('add_to')) {
                     case "list":
                         $data = [
                             'shopping_list_id' => $this->input->post('add_to_list_id'),
                             'product_id' => $this->input->post('buy_product_id'),
-                            'qty' => $this->input->post('buy_qty')
                         ];
 
-                        $shopping_products_list = $this->ShoppingProductsListModel->findProduct($data['shopping_list_id'], $data['product_id']);
                         $shopping_products_list_count = $this->ShoppingProductsListModel->count($data['shopping_list_id'], $data['product_id']);
 
                         if ($shopping_products_list_count > 0) {
-                            $shopping_list_id = $data['shopping_list_id'];
-                            $product_id = $data['product_id'];
-
-                            $data = [
-                                'qty' => $shopping_products_list['qty'] + $this->input->post('buy_qty')
-                            ];
-
-                            if ($product_qty >= $data['qty']) {
-                                if ($this->ShoppingProductsListModel->update($shopping_list_id, $product_id, $data)) {
-                                    $data["status"] = "success";
-                                    $data["message"] = "ditambahkan ke shopping list " . $this->ShoppingListModel->find($this->input->post('add_to_list_id'))['name'];
-                                } else {
-                                    $data["status"] = "danger";
-                                    $data["message"] = "shopping list lost";
-                                }
-                            } else {
-                                $data["status"] = "danger";
-                                $data["message"] = "stok tidak mencukupi";
-                            }
+                            $data["status"] = "success";
+                            $data["message"] = "ditambahkan ke shopping list " . $this->ShoppingListModel->find($this->input->post('add_to_list_id'))['name'];
                         } else {
                             if ($this->ShoppingProductsListModel->insert($data)) {
                                 $data["status"] = "success";

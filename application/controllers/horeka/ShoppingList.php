@@ -13,7 +13,8 @@ class ShoppingList extends CI_Controller
 		$this->load->model('horeka/ShoppingProductsListModel');
 	}
 
-	public function index(){
+	public function index()
+	{
 		return redirect('horeka');
 	}
 
@@ -22,6 +23,9 @@ class ShoppingList extends CI_Controller
 		if ($this->input->method() == "post") {
 			if ($this->input->post('submit_shopping_list')) {
 				switch ($this->input->post('submit_shopping_list')) {
+					case "buy":
+						
+						break;
 					case "delete":
 						$data = [
 							'product_id' => $this->input->post('product_id')
