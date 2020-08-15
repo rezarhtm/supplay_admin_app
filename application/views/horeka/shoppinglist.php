@@ -65,7 +65,7 @@
 						</table>
 
 						<div class="my-4">
-							<button type="submit" name="submit_shopping_list" value="buy" class="w-100 btn btn-success font-weight-bold">
+							<button type="submit" onclick="return confirm('Lakukan transaksi?')" name="submit_shopping_list" value="buy" class="w-100 btn btn-success font-weight-bold">
 								BELI
 							</button>
 						</div>
