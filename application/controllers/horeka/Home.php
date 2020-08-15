@@ -12,6 +12,7 @@ class Home extends CI_Controller
         $this->auth->isRoles("horeka");
 
         $this->load->model('ProductModel');
+        $this->load->model('HorekaModel');
 
         $this->load->model('horeka/ShoppingListModel');
         $this->load->model('horeka/ShoppingProductsListModel');
@@ -143,6 +144,7 @@ class Home extends CI_Controller
         }
 
         $data['shopping_list'] = $this->ShoppingListModel->get();
+        $data['data_horeka'] = $this->HorekaModel->getInfo("h_username", $this->auth->userName);
 
         $this->load->view('template/horeka/header');
         $this->load->view('horeka/home', $data);

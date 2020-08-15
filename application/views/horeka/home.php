@@ -11,10 +11,89 @@
 	<div class="row">
 		<div class="col-md-3">
 			<div>
-				Atas: data horeka (query dari tabel horeka)
+				<div class="my-1">
+					<div class="font-weight-bold">
+						Horeka ID:
+					</div>
+					<div>
+						<?= $data_horeka['horeka_id'] ?>
+					</div>
+				</div>
+				<div class="my-1">
+					<div class="font-weight-bold">
+						Nama:
+					</div>
+					<div>
+						<?= $data_horeka['h_name'] ?>
+					</div>
+				</div>
+				<div class="my-1">
+					<div class="font-weight-bold">
+						NPWP:
+					</div>
+					<div>
+						<?= $data_horeka['h_npwp'] ?>
+					</div>
+				</div>
+				<div class="my-1">
+					<div class="font-weight-bold">
+						Nama Penanggungjawab:
+					</div>
+					<div>
+						<?= $data_horeka['h_pic_name'] ?>
+					</div>
+				</div>
+				<div class="my-1">
+					<div class="font-weight-bold">
+						Alamat:
+					</div>
+					<div>
+						<?= $data_horeka['h_address'] ?>
+					</div>
+				</div>
+				<div class="my-1">
+					<div class="font-weight-bold">
+						Alamat Penagihan:
+					</div>
+					<div>
+						<?= $data_horeka['h_biz_address'] ?>
+					</div>
+				</div>
+				<div class="my-1">
+					<div class="font-weight-bold">
+						Telepon
+					</div>
+					<div>
+						<?= $data_horeka['h_phone'] ?>
+					</div>
+				</div>
+				<div class="my-1">
+					<div class="font-weight-bold">
+						Fax
+					</div>
+					<div>
+						<?= $data_horeka['h_fax'] ?>
+					</div>
+				</div>
+				<div class="my-1">
+					<div class="font-weight-bold">
+						Email
+					</div>
+					<div>
+						<?= $data_horeka['h_email'] ?>
+					</div>
+				</div>
+				<div class="my-1">
+					<div class="font-weight-bold">
+						Credit Score
+					</div>
+					<div>
+						<?= $data_horeka['credit_score'] ?>
+					</div>
+				</div>
 			</div>
 			<div>
-				Bawah: berisi tagihan tagihan ( Jika credit scoring bernilai 1, maka horeka hanya punya 1 slot tagihan yang aktif. Berlaku sejumlah kelipatan )
+				<!-- Bawah: berisi tagihan tagihan ( Jika credit scoring bernilai 1, maka horeka hanya punya 1 slot tagihan yang aktif. Berlaku sejumlah kelipatan ) -->
 			</div>
 		</div>
 		<div class="col-md-9">
