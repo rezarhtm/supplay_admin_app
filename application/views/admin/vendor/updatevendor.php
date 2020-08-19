@@ -26,7 +26,12 @@
         </div>
         <div class="form-group">
           <label for="v_username">Username</label>
+          <input hidden required type="text" name="old_username" value="<?php echo $vendor['v_username']; ?>">
           <input class="form-control" id="v_username" required type="text" name="v_username" value="<?php echo $vendor['v_username']; ?>">
+        </div>
+        <div class="form-group">
+          <label for="v_password">Password</label>
+          <input class="form-control" id="v_password" type="password" name="v_password" value="">
         </div>
         <div class="form-group">
           <label for="v_pic_name">Nama Penanggungjawab</label>

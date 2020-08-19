@@ -43,6 +43,10 @@
           <input class="form-control" id="v_username" required type="text" name="v_username">
         </div>
         <div class="form-group">
+          <label for="v_password">Password</label>
+          <input minlength="3" class="form-control" id="v_password" required type="password" name="v_password">
+        </div>
+        <div class="form-group">
           <label for="v_pic_name">Nama Penanggungjawab</label>
           <input class="form-control" id="v_pic_name" required type="text" name="v_pic_name">
         </div>

@@ -32,6 +32,7 @@ class Vendor extends CI_Controller{
     public function insert() {
         $this->load->model("VendorModel");
         $this->load->model("BankModel");
+        $this->load->model("User");
         $this->load->helper('date');
         $data = array();
         
@@ -44,7 +45,7 @@ class Vendor extends CI_Controller{
                 'v_name' => $this->input->post('v_name'),
                 'v_npwp' => $this->input->post('v_npwp'),
                 'v_username' => $this->input->post('v_username'),
-                'v_password' => $this->input->post('v_username'),
+                // 'v_password' => $this->input->post('v_username'),
                 'v_pic_name' => $this->input->post('v_pic_name'),
                 'v_address' => $this->input->post('v_address'),
                 'v_biz_address' => $this->input->post('v_biz_address'),
@@ -63,7 +64,18 @@ class Vendor extends CI_Controller{
                 'updated_at' => date($now)
             );
 
-            if($this->VendorModel->insert($data)) {
+            $user = $this->User->add(
+                [ 
+                    'name' => $data['v_name'], 
+                    'username' => $data['v_username'], 
+                    'password' => $this->input->post('v_password'), 
+                    'status' => 1, 
+                ]
+            );
+
+            $role = $this->User->addRoles($this->db->insert_id(), 3);
+
+            if($this->VendorModel->insert($data) && $user && $role) {
                 $data["status"] = "success";
                 $data["message"] = "data added";
             }else{
@@ -81,6 +93,7 @@ class Vendor extends CI_Controller{
     public function update($vendor_id) {
         $this->load->model("VendorModel");
         $this->load->model("BankModel");
+        $this->load->model("User");
         $data['vendor']=$this->VendorModel->getInfo('vendor_id', $vendor_id);
         $now = "Y-m-d H:i:s";
 
@@ -89,7 +102,7 @@ class Vendor extends CI_Controller{
             $new['v_name'] = $this->input->post('v_name');
             $new['v_npwp'] = $this->input->post('v_npwp');
             $new['v_username'] = $this->input->post('v_username');
-            $new['v_password'] = $this->input->post('v_username');
+            // $new['v_password'] = $this->input->post('v_username');
             $new['v_pic_name'] = $this->input->post('v_pic_name');
             $new['v_address'] = $this->input->post('v_address');
             $new['v_biz_address'] = $this->input->post('v_biz_address');
@@ -106,9 +119,34 @@ class Vendor extends CI_Controller{
             $new['status_id'] = $this->input->post('status_id');
             $new['updated_at'] = date($now);
 
+            $user_id = $this->User->findByUsername($this->input->post('old_username'))->id;
+
+            if(empty($this->input->post('v_password'))){
+                $user = $this->User->edit(
+                    [
+                        'id' => $user_id,
+
+                        'name' => $new['v_name'], 
+                        'username' => $new['v_username']
+                    ]
+                );
+            }else{
+                $hashed_password = password_hash($this->input->post('v_password'), PASSWORD_BCRYPT);
+
+                $user = $this->User->edit(
+                    [ 
+                        'id' => $user_id,
+                        
+                        'name' => $new['v_name'], 
+                        'username' => $new['v_username'], 
+                        'password' => $hashed_password
+                    ]
+                );
+            }
+
             $id = $this->VendorModel->update($vendor_id, $new);
 
-            if($id) {
+            if($user && $id) {
                 $data["status"] = "success";
                 $data["message"] = "data updated";
             }else{

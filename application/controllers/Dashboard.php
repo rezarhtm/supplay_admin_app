@@ -15,9 +15,10 @@ class Dashboard extends CI_Controller
 			return redirect('admin');
 		}else if(hasRole('horeka')){
 			return redirect('horeka');
+		}else if(hasRole('vendor')){
+			return redirect('vendor');
 		}else{
 			return redirect('login');
 		}
 	}
 }
-?>
