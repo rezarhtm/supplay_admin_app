@@ -69,7 +69,7 @@ class Horeka extends CI_Controller {
                 [ 
                     'name' => $data['h_name'], 
                     'username' => $data['h_username'], 
-                    'password' => password_hash($this->input->post('h_password'), PASSWORD_BCRYPT), 
+                    'password' => $this->input->post('h_password'), 
                     'status' => 1, 
                 ]
             );
