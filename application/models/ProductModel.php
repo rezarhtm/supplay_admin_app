@@ -3,14 +3,15 @@
 class ProductModel extends CI_Model
 {
     var $table = 'products'; //nama tabel dari database
-    var $column_order = array(null, 'product_name', 'vendor_id', 'product_desc', 'category_id', 'qty', 'unit', 'price_perunit'); //field yang ada di table
-    var $column_search = array('product_name'); //field yang diizin untuk pencarian 
+    var $column_order = array(null, 'product_name', 'price_perunit', 'unit');
+    var $column_search = array('product_id', 'product_name'); //field yang diizin untuk pencarian 
     var $order = array('created_at' => 'DESC'); // default order 
 
     public function __construct()
     {
         parent::__construct();
         $this->load->database();
+        $this->load->model('VendorModel');
     }
 
     public function get()
@@ -77,6 +78,11 @@ class ProductModel extends CI_Model
 
     private function _get_datatables_query()
     {
+        if ($this->auth->hasRole('vendor')) {
+            $vendor = $this->VendorModel->getInfo('v_username', $this->auth->userName);
+            $this->db->where('vendor_id', $vendor['vendor_id']);
+        }
+
         $this->db->from($this->table);
         $i = 0;
         foreach ($this->column_search as $item) // looping awal

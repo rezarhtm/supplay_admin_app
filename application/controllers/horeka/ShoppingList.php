@@ -8,7 +8,7 @@ class ShoppingList extends CI_Controller
 
 		// Check Login & Role untuk Horeka
 		$this->auth->authenticate();
-		$this->auth->isRoles("horeka");
+		$this->auth->isRoles(["horeka"]);
 
 		$this->load->model('ProductModel');
 		$this->load->model('horeka/ShoppingProductsListModel');

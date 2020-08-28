@@ -8,7 +8,7 @@ class Vendor extends CI_Controller{
 
         // Check Login & Role untuk Admin
         $this->auth->authenticate();
-        $this->auth->isRoles("admin");
+        $this->auth->isRoles(["admin"]);
     }
     
     public function index() {

@@ -55,3 +55,7 @@ $route['translate_uri_dashes'] = FALSE;
 
 $route['admin'] = 'admin/home';
 $route['horeka'] = 'horeka/home';
+$route['vendor'] = 'vendor/home';
+
+$route['vendor/(:any)/(:any)'] = 'admin/$1/$2';
+$route['vendor/(:any)/(:any)/(:any)'] = 'admin/$1/$2/$3';

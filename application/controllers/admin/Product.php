@@ -8,7 +8,7 @@ class Product extends CI_Controller {
 
         // Check Login & Role untuk Admin
         $this->auth->authenticate();
-        $this->auth->isRoles("admin");
+        $this->auth->isRoles(["admin", "vendor"]);
     }
     
     public function index() {
@@ -34,6 +34,7 @@ class Product extends CI_Controller {
         $this->load->model("ProductModel");
         $this->load->helper('date');
         $this->load->helper('form_helper');
+
         $data = array();
         $now = "Y-m-d H:i:s";
 
@@ -70,15 +71,27 @@ class Product extends CI_Controller {
         $data['vendor_get'] = $this->ProductModel->getVendor();
         $data['category_get'] = $this->ProductModel->getCategory();
 
+        if($this->auth->hasRole('admin')){
+            $this->load->view("template/admin/header");
+        }else if($this->auth->hasRole('vendor')){
+            $this->load->view("template/vendor/header");
+        }
 
-        $this->load->view("template/admin/header");
+        if($this->auth->hasRole('vendor')){
+            $data['current_vendor_id'] = $this->VendorModel->getInfo("v_username", $this->auth->userName)['vendor_id'];
+        }
+
         $this->load->view("admin/product/addproduct", $data);
-        $this->load->view("template/admin/footer");
+
+        if($this->auth->hasRole('admin')){
+            $this->load->view("template/admin/footer");
+        }else if($this->auth->hasRole('vendor')){
+            $this->load->view("template/vendor/footer");
+        }
     }
 
     public function update($product_id) {
         $this->load->model("ProductModel");
-        $data['product']=$this->ProductModel->getInfo('product_id', $product_id);
         $now = "Y-m-d H:i:s";
 
         if($this->input->method() == "post") 
@@ -105,12 +118,24 @@ class Product extends CI_Controller {
             }
         }
 
+        $data['product']=$this->ProductModel->getInfo('product_id', $product_id);
+
         $data['vendor_get'] = $this->ProductModel->getVendor();
         $data['category_get'] = $this->ProductModel->getCategory();
-        
-        $this->load->view("template/admin/header");
+
+        if($this->auth->hasRole('admin')){
+            $this->load->view("template/admin/header");
+        }else if($this->auth->hasRole('vendor')){
+            $this->load->view("template/vendor/header");
+        }
+
         $this->load->view("admin/product/updateproduct", $data);
-        $this->load->view("template/admin/footer");
+
+        if($this->auth->hasRole('admin')){
+            $this->load->view("template/admin/footer");
+        }else if($this->auth->hasRole('vendor')){
+            $this->load->view("template/vendor/footer");
+        }
     }
     public function detailproduct($product_id){
         $data['product']=$this->ProductModel->getInfo('product_id',$product_id);

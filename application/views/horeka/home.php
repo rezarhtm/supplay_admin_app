@@ -308,6 +308,7 @@
 									</div>
 
 									<div class="form-group">
+										<?php if(count($shopping_list) > 0): ?>
 										<select name="add_to_list_id" id="add_to_list_select" class="custom-select">
 											<?php foreach ($shopping_list as $list) : ?>
 												<option value="<?= $list->id ?>">
@@ -315,12 +316,20 @@
 												</option>
 											<?php endforeach ?>
 										</select>
+										
+										<?php else: ?>
+
+										<button class="btn btn-primary w-100" data-dismiss="modal" data-toggle="modal" data-target="#create_shopping_list_modal">
+											Create Shopping List
+										</button>
+
+										<?php endif ?>
 									</div>
 								</div>
 								<div class="modal-footer">
 									<input id="buy_product_id" name="buy_product_id" class="form-control" hidden>
 
-									<button type="submit" value="list" name="add_to" class="btn btn-primary">Add to List</button>
+									<button type="submit" value="list" name="add_to" class="btn btn-primary" <?= count($shopping_list) > 0 ? "" :  "disabled" ?>>Add to List</button>
 									<button type="submit" value="cart" name="add_to" class="btn btn-success">Add to Cart</button>
 									<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
 								</div>
@@ -371,7 +380,7 @@
 			"order": [],
 
 			"ajax": {
-				"url": "<?php echo site_url('horeka/api/products') ?>",
+				"url": "<?php echo site_url('api/products') ?>",
 				"type": "POST"
 			},
 
@@ -381,6 +390,7 @@
 				"searchable": false
 			}, {
 				"targets": -1,
+				"orderable": false,
 				'defaultContent': '<button class="btn btn-success" data-toggle="modal" id="btn-beli" data-target="#info_produk">BELI</button>'
 			}, ],
 		});
@@ -405,7 +415,7 @@
 			var id = data[0];
 			$.ajax({
 					method: "GET",
-					url: `horeka/api/products/detail/${id}`
+					url: `api/products/detail/${id}`
 				})
 				.done(function(data) {
 					var d = JSON.parse(data);

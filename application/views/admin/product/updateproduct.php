@@ -23,6 +23,7 @@
         <div class="form-group">
           <label for="vendor_id">Vendor</label>
           <div class="input-group mb-3">
+            <?php if($this->auth->hasRole('admin')): ?>
             <div class="input-group-prepend">
               <button class="btn btn-outline-secondary dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Pilih</button>
               <div class="dropdown-menu">
@@ -33,13 +34,13 @@
                 <?php endforeach ?>
               </div>
             </div>
-            <input value="<?= $product['vendor_id'] ?>" type="text" id="vendor_id" name="vendor_id" class="form-control" aria-label="Text input with dropdown button">
+            <?php endif ?>
+            <input value="<?= $product['vendor_id'] ?>" type="text" id="vendor_id" name="vendor_id" class="form-control" <?= $this->auth->hasRole('admin') ? '' : 'readonly' ?> aria-label="Text input with dropdown button">
           </div>
         </div>
         <div class="form-group">
           <label for="product_desc">Deskripsi</label>
-          <textarea class="form-control" id="product_desc" required name="product_desc"><?php echo $product['product_desc']; ?>
-          </textarea>
+          <textarea class="form-control" id="product_desc" required name="product_desc"><?php echo $product['product_desc']; ?></textarea>
         </div>
         <div class="form-group">
           <label for="category_id">Kategori</label>
@@ -69,7 +70,11 @@
         </div>
         <button type="submit" class="btn btn-success" name="submit">Submit</button>
         <div class="my-2">
-          <a href="<?php echo base_url(); ?>index.php/admin/product" class="btn btn-danger" role="button">Kembali ke Daftar Produk</a>
+          <?php if($this->auth->hasRole('admin')): ?>
+            <a href="<?php echo base_url(); ?>index.php/admin/product" class="btn btn-danger" role="button">Kembali ke Daftar Produk</a>
+          <?php elseif($this->auth->hasRole('vendor')): ?>
+            <a href="<?php echo base_url(); ?>index.php/vendor/products" class="btn btn-danger" role="button">Kembali ke Daftar Produk</a>
+          <?php endif ?>
         </div>
       </form>
 
