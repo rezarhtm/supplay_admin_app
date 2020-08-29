@@ -14,6 +14,8 @@
 	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
 	<link rel="stylesheet" href="https://cdn.datatables.net/1.10.21/css/jquery.dataTables.min.css">
 
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+
 	<!-- <style>
 		.dataTables_filter {
 			display: none;
@@ -36,7 +38,22 @@
 			<div class="sidebar-heading"><a href="<?php echo base_url(); ?>index.php/">Supplay.id | Vendor</a></div>
 			<ul class="list-group list-group-flush">
 				<li><a href="<?php echo base_url(); ?>index.php/vendor/products" aria-expanded="false" class="list-group-item list-group-item-action bg-light">Management Produk</a></li>
-				<li><a href="<?php echo base_url(); ?>index.php/vendor/orders" aria-expanded="false" class="list-group-item list-group-item-action bg-light">Management Order</a></li>
+				<hr>
+				<li>
+					<a href="<?php echo base_url(); ?>index.php/vendor/orders" aria-expanded="false" class="list-group-item list-group-item-action bg-light">Management Order</a>
+					<a href="<?php echo base_url(); ?>index.php/vendor/orders?status=pending" aria-expanded="false" class="list-group-item list-group-item-action bg-light">
+						<?php  
+							$CI =& get_instance();
+							$CI->load->model('TransactionModel');
+							$count_new_order = $CI->TransactionModel->count_new_order();
+						?>
+						<i class="fa fa-bell mr-3"></i><span>New Order</span> <span class="badge badge-danger mx-1"><?= $count_new_order > 0 ? $count_new_order : null ?></span>
+					</a>
+					<a href="<?php echo base_url(); ?>index.php/vendor/orders?status=running" aria-expanded="false" class="list-group-item list-group-item-action bg-light">
+						<i class="fa fa-tasks mr-3"></i><span>Running Order</span>
+					</a>
+				</li>
+				<hr>
 				<li><a href="<?php echo base_url(); ?>index.php/vendor/orders" aria-expanded="false" class="list-group-item list-group-item-action bg-light">Permohonan Pembayaran</a></li>
 			</ul>
 			<ul class="list-group list-group-flush" style="position: absolute; display: inline-block; bottom: 0;">
