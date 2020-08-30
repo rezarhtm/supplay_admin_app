@@ -3,8 +3,8 @@
 class TransactionModel extends CI_Model
 {
 	var $table = 'transactions'; //nama tabel dari database
-	var $column_order = array('transaction_id', 'horeka_username', 'total_order', 'order_status');
-	var $column_search = array('products.product_id', 'products.product_name'); //field yang diizin untuk pencarian 
+	var $column_order = array(null, 'transactions.id', 'horeka.horeka_id', 'transactions.total_order', 'transactions.order_status');
+	var $column_search = array('transactions.id', 'horeka.horeka_id'); //field yang diizin untuk pencarian 
 	var $order = array('transactions.created_at' => 'DESC'); // default order 
 
 	public function __construct()
@@ -16,11 +16,6 @@ class TransactionModel extends CI_Model
 
 		$this->db->query('SET SESSION sql_mode = ""');
 	}
-
-	public function get()
-	{
-		return $this->db->from('products')->order_by('created_at', 'DESC')->get()->result();
-	}
 	
 	public function update($id, $new)
     {
@@ -30,15 +25,20 @@ class TransactionModel extends CI_Model
         return $this->db->affected_rows();
     }
 
-	public function detail($id)
-	{
-		$this->db->where('products.product_id', $id);
+	public function orders($id){
 		return $this->db
-			// ->select('products.*, category.category_desc')
-			->from('products')
-			->join('category', 'category.category_id = products.category_id')
-			->get()
-			->result();
+				->join('products', 'products.product_id = orders.product_id')
+				->join('transactions', 'transactions.id = orders.transaction_id')
+				->select('products.product_name')
+				->select('orders.product_price')
+				->select('orders.qty')
+
+				->select('transactions.id as transaction_id')
+				->select('transactions.total_order')
+				->where('transactions.id', $id)
+				->from('orders')
+				->get()
+				->result();
 	}
 
 	private function _get_datatables_query($status = null)
@@ -58,7 +58,7 @@ class TransactionModel extends CI_Model
 		}
 
 		$this->db->select('transactions.order_status');
-		$this->db->select('horeka.h_username as horeka_username');
+		$this->db->select('horeka.horeka_id as horeka_username');
 		$this->db->select('transactions.total_order as total_order');
 		$this->db->select('transactions.id as transaction_id');
 

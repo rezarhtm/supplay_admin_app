@@ -83,7 +83,11 @@
             <div class="col-md-6">
             </div>
             <div class="col-md-12">
-                <a href="<?php echo base_url(); ?>index.php/admin/horeka/" class="btn btn-danger" role="button">Kembali</a>
+                <?php if($this->auth->hasRole('admin')): ?>
+                <a href="<?php echo base_url(); ?>index.php/admin/horeka" class="btn btn-danger" role="button">Kembali</a>
+                <?php elseif($this->auth->hasRole('vendor')): ?>
+                <a href="<?php echo base_url(); ?>index.php/vendor/orders" class="btn btn-danger" role="button">Kembali</a>
+                <?php endif ?>
             </div>
 
         </div>

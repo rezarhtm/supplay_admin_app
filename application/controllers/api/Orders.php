@@ -32,11 +32,26 @@ class Orders extends CI_Controller
 		foreach ($list as $field) {
 			$no++;
 			$row = array();
-			// $row[] = $no;
+			$row[] = '<button class="btn btn-secondary font-weight-bold" data-toggle="modal" id="btn-lihat-pesanan" data-target="#lihat-pesanan">' . 'Lihat Pesanan' . '</button>';
 			$row[] = $field->transaction_id;
-			$row[] = $field->horeka_username;
+			$row[] = '<a href="horeka/detail/'. $field->horeka_username .'">' . $field->horeka_username . '</a>';
 			$row[] = number_format($field->total_order);
-			$row[] = $field->order_status;
+
+			switch ($field->order_status) {
+				case 'REJECTED':
+					$order_status_color = "danger";
+					break;
+				case 'ON PROCESS':
+					$order_status_color = "primary";
+					break;
+				case 'SENT':
+					$order_status_color = "success";
+					break;
+				default:
+				$order_status_color = "secondary";
+					break;
+			}
+			$row[] = '<span class="bg-'. $order_status_color .' text-white px-3 font-weight-bold">' . $field->order_status . '</span>';
 
 			if ($this->auth->hasRole('vendor')) {
 				if($field->order_status == 'PENDING'){
@@ -97,8 +112,8 @@ class Orders extends CI_Controller
 
 	public function detail($id)
 	{
-		$data = $this->TransactionModel->detail($id);
+		$data = $this->TransactionModel->orders($id);
 
-		echo json_encode($data[0]);
+		echo json_encode($data);
 	}
 }

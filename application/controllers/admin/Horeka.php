@@ -8,10 +8,11 @@ class Horeka extends CI_Controller {
 
         // Check Login & Role untuk Admin
         $this->auth->authenticate();
-        $this->auth->isRoles(["admin"]);
     }
 
     public function index() {
+        $this->auth->isRoles(["admin"]);
+
         $this->load->model("HorekaModel");
         $data = array(
             "horeka" => $this->HorekaModel->get()
@@ -22,15 +23,30 @@ class Horeka extends CI_Controller {
         
     }
     public function detail($id) {
+        $this->auth->isRoles(["admin", "vendor"]);
+
         $this->load->model('HorekaModel');
         $data = array (
             'horeka' => $this->HorekaModel->detail($id)
         );
-        $this->load->view("template/admin/header");
+        
+        if($this->auth->hasRole('admin')){
+            $this->load->view("template/admin/header");
+        }else if($this->auth->hasRole('vendor')){
+            $this->load->view("template/vendor/header");
+        }
+        
         $this->load->view("admin/horeka/viewthis", $data);
-        $this->load->view("template/admin/footer");
+
+        if($this->auth->hasRole('admin')){
+            $this->load->view("template/admin/footer");
+        }else if($this->auth->hasRole('vendor')){
+            $this->load->view("template/vendor/footer");
+        }
     }
     public function insert() {
+        $this->auth->isRoles(["admin"]);
+
         $this->load->model("HorekaModel");
         $this->load->model("BankModel");
         $this->load->model("User");
@@ -92,6 +108,8 @@ class Horeka extends CI_Controller {
         $this->load->view("template/admin/footer");
     }
     public function update($horeka_id) {
+        $this->auth->isRoles(["admin"]);
+
         $this->load->model("HorekaModel");
         $this->load->model("BankModel");
         $this->load->model("User");
@@ -162,6 +180,8 @@ class Horeka extends CI_Controller {
         $this->load->view("template/admin/footer");
     }
     public function detailhoreka($horeka_id){
+        $this->auth->isRoles(["admin"]);
+        
         $data['horeka']=$this->HorekaModel->getInfo('horeka_id',$horeka_id);
         $this->load->view("template/admin/header");
         $this->load->view("admin/horeka/updatehoreka", $data);
