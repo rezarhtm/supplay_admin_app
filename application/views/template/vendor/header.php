@@ -46,6 +46,8 @@
 							$CI =& get_instance();
 							$CI->load->model('TransactionModel');
 							$count_new_order = $CI->TransactionModel->count_new_order();
+							
+							$fund = $CI->VendorModel->getInfo('v_username', $this->auth->userName)['fund'];
 						?>
 						<i class="fa fa-bell mr-3"></i><span>New Order</span> <span class="badge badge-danger mx-1"><?= $count_new_order > 0 ? $count_new_order : null ?></span>
 					</a>
@@ -54,13 +56,21 @@
 					</a>
 				</li>
 				<hr>
-				<li><a href="<?php echo base_url(); ?>index.php/vendor/orders" aria-expanded="false" class="list-group-item list-group-item-action bg-light">Permohonan Pembayaran</a></li>
 			</ul>
 			<ul class="list-group list-group-flush" style="position: absolute; display: inline-block; bottom: 0;">
 				<li class="list-group-item list-group-item-action bg-primary text-white">
 					<!-- <span class="badge badge-primary" style="font-size: 1rem;"><?= $this->auth->userName ?></span> -->
 					<?= $this->auth->userName ?>
 				</li>
+
+				<li class="list-group-item list-group-item-action bg-success text-white">
+					Rp. <?= number_format($fund) ?>
+				</li>
+
+				<a href="<?php echo base_url(); ?>index.php/vendor/pembayaran" aria-expanded="false" class="list-group-item list-group-item-action bg-light">
+					<span>Permohonan Pembayaran</span>
+				</a>
+
 				<li><a href="<?php echo base_url(); ?>index.php/login/logout" aria-expanded="false" class="list-group-item list-group-item-action bg-light">Logout</a></li>
 			</ul>
 		</div>
