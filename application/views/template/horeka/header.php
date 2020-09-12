@@ -37,7 +37,18 @@
 			<ul class="list-group list-group-flush">
 				<li><a href="<?php echo base_url(); ?>index.php" aria-expanded="false" class="list-group-item list-group-item-action bg-light">Dashboard</a></li>
 				<li><a href="<?php echo base_url(); ?>index.php/horeka/cart" aria-expanded="false" class="list-group-item list-group-item-action bg-light">Cart</a></li>
-				<li><a href="<?php echo base_url(); ?>index.php/horeka/transactions" aria-expanded="false" class="list-group-item list-group-item-action bg-light">Pesanan</a></li>
+				
+				<hr/>
+				<li class="text-center">
+					<span class="list-group-item list-group-item-action bg-light font-weight-bold">
+						Keuangan
+					</span>
+				</li>
+				<li><a href="<?php echo base_url(); ?>index.php/horeka/transactions" aria-expanded="false" class="list-group-item list-group-item-action bg-light">Histori Order</a></li>
+				<li><a href="<?php echo base_url(); ?>index.php/horeka/invoices" aria-expanded="false" class="list-group-item list-group-item-action bg-light">Lihat Tagihan</a></li>
+
+				<li><a href="<?php echo base_url(); ?>index.php/horeka/invoices/cara_pembayaran" aria-expanded="false" class="list-group-item list-group-item-action bg-light">Cara Pembayaran</a></li>
+				<li><a href="<?php echo base_url(); ?>index.php/horeka/invoices/konfirmasi_pembayaran" aria-expanded="false" class="list-group-item list-group-item-action bg-light">Konfirmasi Pembayaran</a></li>
 			</ul>
 			<ul class="list-group list-group-flush" style="position: absolute; display: inline-block; bottom: 0;">
 				<li class="list-group-item list-group-item-action bg-primary text-white">
