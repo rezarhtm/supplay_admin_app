@@ -15,54 +15,112 @@ class TransactionModel extends CI_Model
 		$this->load->model('VendorModel');
 
 		$this->db->query('SET SESSION sql_mode = ""');
+
+		if($this->auth->hasRole('vendor')){
+			$this->column_order = array(null, 'transactions.id', 'horeka.horeka_id', 'transactions.total_order', 'transactions.order_status');
+			$this->column_search = array('transactions.id', 'horeka.horeka_id'); //field yang diizin untuk pencarian 
+			$this->order = array('transactions.created_at' => 'DESC'); // default order 
+		}else if($this->auth->hasRole('horeka')){
+			$this->column_order = array('id', 'total_order', 'order_status', null);
+			$this->column_search = array('id', 'total_order'); //field yang diizin untuk pencarian 
+			$this->order = array('transactions.created_at' => 'DESC'); // default order 
+		}
 	}
 	
+	public function find($id){
+		$this->db->where('id', $id);
+		$this->db->from($this->table);
+		$query = $this->db->get()->row();
+
+		return $query;
+	}
+
 	public function update($id, $new)
     {
         $this->db->where("id", $id);
 		$this->db->update("transactions", $new);
 		
         return $this->db->affected_rows();
-    }
+	}
+	
+	public function getTransactionStatus($id){
+		$this->db->where('id', $id);
+		$this->db->from($this->table);
+		$query = $this->db->get()->row();
+		
+		return $query->order_status;
+	}
 
 	public function orders($id){
-		return $this->db
-				->join('products', 'products.product_id = orders.product_id')
-				->join('transactions', 'transactions.id = orders.transaction_id')
-				->select('products.product_name')
-				->select('orders.product_price')
-				->select('orders.qty')
+		$transaction_status = $this->getTransactionStatus($id);
 
-				->select('transactions.id as transaction_id')
-				->select('transactions.total_order')
-				->where('transactions.id', $id)
-				->from('orders')
-				->get()
-				->result();
+		if($this->auth->hasRole('vendor')){
+			return $this->db
+			->join('products', 'products.product_id = orders.product_id')
+			->join('transactions', 'transactions.id = orders.transaction_id')
+			->select('products.product_name')
+			->select('orders.product_price')
+			->select('orders.qty')
+
+			->select('transactions.id as transaction_id')
+			->select('transactions.total_order')
+			->where('transactions.id', $id)
+			->from('orders')
+			->get()
+			->result();
+		}else if($this->auth->hasRole('horeka')){
+			if($transaction_status == 'RETURN'){
+				$this->db->where('orders.jumlah_diretur > 0');
+			}
+
+			return $this->db
+			->join('products', 'products.product_id = orders.product_id')
+			->join('transactions', 'transactions.id = orders.transaction_id')
+
+			->select('products.product_name')
+			->select('products.unit')
+
+			->select('orders.id as order_id')
+			->select('orders.product_price')
+			->select('orders.order_price')
+			->select('orders.qty')
+			->select('orders.jumlah_diretur')
+
+			->select('transactions.id as transaction_id')
+			->where('transactions.id', $id)
+			->from('orders')
+			->get()
+			->result();
+		}
+		
 	}
 
 	private function _get_datatables_query($status = null)
 	{
-		$vendor = $this->VendorModel->getInfo('v_username', $this->auth->userName);
+		if ($this->auth->hasRole('vendor')) {
+			$vendor = $this->VendorModel->getInfo('v_username', $this->auth->userName);
 
-		$this->db->join('orders', 'orders.transaction_id = transactions.id');
-		$this->db->join('products', 'products.product_id = orders.product_id');
-		$this->db->join('vendors', 'vendors.vendor_id = products.vendor_id');
-		$this->db->join('users', 'users.id = transactions.user_id');
-		$this->db->join('horeka', 'horeka.h_username = users.username');
+			$this->db->join('orders', 'orders.transaction_id = transactions.id');
+			$this->db->join('products', 'products.product_id = orders.product_id');
+			$this->db->join('vendors', 'vendors.vendor_id = products.vendor_id');
+			$this->db->join('users', 'users.id = transactions.user_id');
+			$this->db->join('horeka', 'horeka.h_username = users.username');
 
-		$this->db->where('vendors.vendor_id', $vendor['vendor_id']);
+			$this->db->where('vendors.vendor_id', $vendor['vendor_id']);
 
-		if($status){
-			$this->db->where('transactions.order_status', $status);
+			if ($status) {
+				$this->db->where('transactions.order_status', $status);
+			}
+
+			$this->db->select('transactions.order_status');
+			$this->db->select('horeka.horeka_id as horeka_username');
+			$this->db->select('transactions.total_order as total_order');
+			$this->db->select('transactions.id as transaction_id');
+
+			$this->db->group_by('transactions.id');
+		}else if($this->auth->hasRole('horeka')){
+			$this->db->where('user_id', $this->auth->userID);
 		}
-
-		$this->db->select('transactions.order_status');
-		$this->db->select('horeka.horeka_id as horeka_username');
-		$this->db->select('transactions.total_order as total_order');
-		$this->db->select('transactions.id as transaction_id');
-
-		$this->db->group_by('transactions.id');
 
 		$this->db->from($this->table);
 		$i = 0;
@@ -115,6 +173,10 @@ class TransactionModel extends CI_Model
 	}
 
 	public function count_new_order(){
-		return $this->db->from($this->table)->where('order_status', 'PENDING')->count_all_results();
+		$vendor = $this->VendorModel->getInfo('v_username', $this->auth->userName);
+
+		return $this->db->from($this->table)
+		->where('vendor_id', $vendor['vendor_id'])
+		->where('order_status', 'PENDING')->count_all_results();
 	}
 }

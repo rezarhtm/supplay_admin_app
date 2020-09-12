@@ -49,10 +49,13 @@
 											<?= number_format($list->price_perunit) ?>
 										</td>
 										<td>
-											<input type="number" name="qty[]" class="form-control" value="0">
+											<input type="number" name="buy_qty" id="qty_<?= $list->product_id ?>" class="form-control my-1" value="1">
 										</td>
 										<td>
 											<form method="POST">
+												<button onclick="addtocart('<?= $list->product_id ?>')" class="btn btn-primary" type="button">
+													Add to Cart
+												</button>
 												<input type="text" name="product_id" value="<?= $list->product_id ?>" hidden>
 												<button onclick="return confirm('Hapus <?= $list->product_name ?>?')" class="btn btn-danger" type="submit" value="delete" name="submit_shopping_list">
 													Hapus
@@ -64,11 +67,11 @@
 							</tbody>
 						</table>
 
-						<div class="my-4">
+						<!-- <div class="my-4">
 							<button type="submit" onclick="return confirm('Lakukan transaksi?')" name="submit_shopping_list" value="buy" class="w-100 btn btn-success font-weight-bold">
 								BELI
 							</button>
-						</div>
+						</div> -->
 					</div>
 				</div>
 			</div>
@@ -87,6 +90,22 @@
 </div>
 
 <script>
+	async function addtocart(p) {
+		var qty = $(`#qty_${p}`).val();
+
+		console.log(qty);
+
+		var data = {
+			buy_qty: qty,
+			buy_product_id: p,
+			add_to: 'cart'
+		};
+
+		$.post('<?= base_url('index.php/horeka') ?>', data, function(response) {
+			alert($(response).find('.alert')[0].innerText);
+		});
+	}
+
 	$("#menu-toggle").click(function(e) {
 		e.preventDefault();
 		$("#wrapper").toggleClass("toggled");

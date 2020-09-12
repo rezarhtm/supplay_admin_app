@@ -2,9 +2,7 @@
 	<?php if (isset($status)) : ?>
 		<div class="row notification">
 			<div class="col-md-12">
-				<div class="alert alert-<?php echo $status; ?>">
-					<?php echo $message; ?>
-				</div>
+				<div class="alert alert-<?php echo $status; ?>"><?php echo $message; ?></div>
 			</div>
 		</div>
 	<?php endif ?>

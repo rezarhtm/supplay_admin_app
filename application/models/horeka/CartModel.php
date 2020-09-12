@@ -31,6 +31,19 @@
 			->count_all_results();
 		}
 
+		public function count_cart(){
+			return $this->db
+			->from($this->table)
+			->where('user_id', $this->auth->userID)
+			->count_all_results();
+		}
+
+		public function getOne(){
+			return $this->db->where('user_id', $this->auth->userID)
+			->from($this->table)
+			->get()->result();
+		}
+
 		public function insert($data = []){
         	return $this->db->insert($this->table, $data);
 		}

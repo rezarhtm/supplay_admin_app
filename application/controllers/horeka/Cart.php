@@ -28,8 +28,11 @@ class Cart extends CI_Controller
 							$check_product = true;
 							$qty_sum = 0;
 
+							$vendor_id = null;
+
 							foreach ($this->input->post('checked_product') as $index => $product_id) {
 								$product_qty = $this->ProductModel->getInfo('product_id', $product_id)['qty'];
+								$vendor_id = $this->ProductModel->getInfo('product_id', $product_id)['vendor_id'];
 
 								$qty_sum += $this->CartModel->find($product_id)['qty'];
 
@@ -44,7 +47,8 @@ class Cart extends CI_Controller
 
 							if ($check_product) {
 								$data = [
-									"user_id" => $this->auth->userID
+									"user_id" => $this->auth->userID, 
+									"vendor_id" => $vendor_id
 								];
 
 								if ($this->TransactionModel->insert($data)) {

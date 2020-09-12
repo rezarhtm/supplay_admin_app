@@ -37,6 +37,7 @@
 			<ul class="list-group list-group-flush">
 				<li><a href="<?php echo base_url(); ?>index.php" aria-expanded="false" class="list-group-item list-group-item-action bg-light">Dashboard</a></li>
 				<li><a href="<?php echo base_url(); ?>index.php/horeka/cart" aria-expanded="false" class="list-group-item list-group-item-action bg-light">Cart</a></li>
+				<li><a href="<?php echo base_url(); ?>index.php/horeka/transactions" aria-expanded="false" class="list-group-item list-group-item-action bg-light">Pesanan</a></li>
 			</ul>
 			<ul class="list-group list-group-flush" style="position: absolute; display: inline-block; bottom: 0;">
 				<li class="list-group-item list-group-item-action bg-primary text-white">
