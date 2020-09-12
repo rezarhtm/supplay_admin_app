@@ -35,7 +35,7 @@ class Invoices extends CI_Controller
 	public function konfirmasi_pembayaran()
 	{
 		$data = [];
-		
+
 		if ($this->input->method() == "post") {
 			if ($this->input->post('konfirmasi') && $this->input->post('id')) {
 				$config['upload_path']          = './uploads/bukti_pembayaran';
@@ -50,10 +50,10 @@ class Invoices extends CI_Controller
 				$invoice_number = $this->input->post('invoice');
 
 				$insert = $this->KonfirmasiPembayaranModel->insert([
-					"id" => $this->input->post('id'), 
-					"invoice_number" => $invoice_number, 
-					"jumlah_transfer" => $this->input->post('jumlah'), 
-					"bank_tujuan" => $this->input->post('bank'), 
+					"id" => $this->input->post('id'),
+					"invoice_number" => $invoice_number,
+					"jumlah_transfer" => $this->input->post('jumlah'),
+					"bank_tujuan" => $this->input->post('bank'),
 					"bukti_pembayaran" => $config['file_name'] . '.' . end($dname)
 				]);
 

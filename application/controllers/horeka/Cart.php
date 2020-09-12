@@ -92,19 +92,19 @@ class Cart extends CI_Controller
 
 										$this->TransactionModel->update($transaction_id, $data);
 
-										$invoice_number = 1 . date("ym") . rand(100, 999);
+										// $invoice_number = 1 . date("ym") . rand(100, 999);
 
-										if ($this->InvoiceModel->insert([
-											"invoice_number" => $invoice_number,
-											"transaction_id" => $transaction_id,
-											"nominal" => $products_sum
-										])) {
+										// if ($this->InvoiceModel->insert([
+										// 	"invoice_number" => $invoice_number,
+										// 	"transaction_id" => $transaction_id,
+										// 	"nominal" => $products_sum
+										// ])) {
 											$data["status"] = "success";
 											$data["message"] = "Transaksi berhasil";
-										} else {
-											$data["status"] = "success";
-											$data["message"] = "Gagal generate invoice";
-										}
+										// } else {
+										// 	$data["status"] = "success";
+										// 	$data["message"] = "Gagal generate invoice";
+										// }
 									}
 								}
 							} else {

@@ -10,8 +10,7 @@ class InvoiceModel extends CI_Model
 	}
 
 	public function get(){
-		$this->db->where('transactions.user_id', $this->auth->userID);
-		$this->db->join('transactions', 'transactions.id = invoices.transaction_id');
+		$this->db->where('user_id', $this->auth->userID);
 		return $this->db->get($this->table)->result();
 	}
 

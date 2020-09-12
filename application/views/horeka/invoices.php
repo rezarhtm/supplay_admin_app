@@ -43,7 +43,7 @@
 											<?= $invoice->status ?>
 										</td>
 										<td>
-											<a href="<?= base_url('index.php/horeka/transactions/action/') . $invoice->transaction_id ?>" class="btn btn-primary">
+											<a href="<?= base_url('index.php/horeka/transactions/action/') . $invoice->invoice_number ?>" class="btn btn-primary">
 												View
 											</a>
 											<button class="btn btn-secondary">

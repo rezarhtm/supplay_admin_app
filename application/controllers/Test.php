@@ -7,10 +7,10 @@ class Test extends CI_Controller
 		parent::__construct();
 		$this->load->library(['auth']);
 		$this->load->model('horeka/CreditScoreModel');
+		$this->load->model('horeka/TransactionModel');
 	}
 
 	public function index(){
-		echo $this->CreditScoreModel->count();
-		echo $this->CreditScoreModel->getCreditScore();
+		print_r($this->TransactionModel->getPendingTransactions());
 	}
 }

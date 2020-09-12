@@ -23,9 +23,8 @@
 		public function count(){
 			return $this->db
 			->from("invoices")
-			->join('transactions', 'transactions.id = invoices.transaction_id')
-			->where('invoices.status !=', 'PAID')
-			->where('transactions.user_id', $this->auth->userID)
+			->where('status !=', 'PAID')
+			->where('user_id', $this->auth->userID)
 			->count_all_results();
 		}
 	}
