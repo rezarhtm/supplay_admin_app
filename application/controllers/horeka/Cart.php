@@ -17,6 +17,7 @@ class Cart extends CI_Controller
 		$this->load->model('horeka/OrderModel');
 		$this->load->model('horeka/TransactionModel');
 		$this->load->model('horeka/InvoiceModel');
+		$this->load->model('horeka/CreditScoreModel');
 	}
 
 	public function index()
@@ -25,83 +26,97 @@ class Cart extends CI_Controller
 			if ($this->input->post('submit_cart')) {
 				switch ($this->input->post('submit_cart')) {
 					case "buy":
-						if ($this->input->post('checked_product')) {
-							$check_product = true;
-							$qty_sum = 0;
+						$credit_score_horeka = $this->CreditScoreModel->getCreditScore();
+						$count_unpaid_invoice = $this->CreditScoreModel->count();
 
-							$vendor_id = null;
+						if ($credit_score_horeka > $count_unpaid_invoice) {
+							if ($this->input->post('checked_product')) {
+								$check_product = true;
+								$qty_sum = 0;
 
-							foreach ($this->input->post('checked_product') as $index => $product_id) {
-								$product_qty = $this->ProductModel->getInfo('product_id', $product_id)['qty'];
-								$vendor_id = $this->ProductModel->getInfo('product_id', $product_id)['vendor_id'];
+								$vendor_id = null;
 
-								$qty_sum += $this->CartModel->find($product_id)['qty'];
+								foreach ($this->input->post('checked_product') as $index => $product_id) {
+									$product_qty = $this->ProductModel->getInfo('product_id', $product_id)['qty'];
+									$vendor_id = $this->ProductModel->getInfo('product_id', $product_id)['vendor_id'];
 
-								if ($product_qty <= $this->CartModel->find($product_id)['qty']) {
+									$qty_sum += $this->CartModel->find($product_id)['qty'];
+
+									if ($product_qty <= $this->CartModel->find($product_id)['qty']) {
+										$check_product = false;
+									}
+								}
+
+								if ($qty_sum < 1) {
 									$check_product = false;
 								}
-							}
 
-							if ($qty_sum < 1) {
-								$check_product = false;
-							}
-
-							if ($check_product) {
-								$data = [
-									"user_id" => $this->auth->userID, 
-									"vendor_id" => $vendor_id
-								];
-
-								if ($this->TransactionModel->insert($data)) {
-									$transaction_id = $this->db->insert_id();
-									$products_sum = 0;
-
-									foreach ($this->input->post('checked_product') as $index => $product_id) {
-										$buy_qty = $this->CartModel->find($product_id)['qty'];
-										if ($buy_qty > 0) {
-											$product = $this->ProductModel->getInfo('product_id', $product_id);
-
-											$data = [
-												"transaction_id" => $transaction_id,
-												"product_id" => $product_id,
-												"qty" => $buy_qty,
-												"product_price" => $product['price_perunit'],
-												"order_price" => $buy_qty * $product['price_perunit']
-											];
-
-											$products_sum += $data['order_price'];
-
-											$this->OrderModel->insert($data);
-										}
-									}
-
+								if ($check_product) {
 									$data = [
-										"total_order" => $products_sum
+										"user_id" => $this->auth->userID,
+										"vendor_id" => $vendor_id
 									];
 
-									$this->TransactionModel->update($transaction_id, $data);
+									if ($this->TransactionModel->insert($data)) {
+										$transaction_id = $this->db->insert_id();
+										$products_sum = 0;
 
-									$invoice_number = 1 . date("ym") . rand(100, 999);
+										foreach ($this->input->post('checked_product') as $index => $product_id) {
+											$buy_qty = $this->CartModel->find($product_id)['qty'];
+											if ($buy_qty > 0) {
+												$product = $this->ProductModel->getInfo('product_id', $product_id);
 
-									if($this->InvoiceModel->insert([
-										"invoice_number" => $invoice_number, 
-										"transaction_id" => $transaction_id, 
-										"nominal" => $products_sum
-									])){
-										$data["status"] = "success";
-										$data["message"] = "Transaksi berhasil";
-									}else{
-										$data["status"] = "success";
-										$data["message"] = "Gagal generate invoice";
+												$data = [
+													"transaction_id" => $transaction_id,
+													"product_id" => $product_id,
+													"qty" => $buy_qty,
+													"product_price" => $product['price_perunit'],
+													"order_price" => $buy_qty * $product['price_perunit']
+												];
+
+												$products_sum += $data['order_price'];
+
+												if ($this->OrderModel->insert($data)) {
+													$cart = [
+														'product_id' => $product_id
+													];
+
+													$this->CartModel->delete($cart);
+												}
+											}
+										}
+
+										$data = [
+											"total_order" => $products_sum
+										];
+
+										$this->TransactionModel->update($transaction_id, $data);
+
+										$invoice_number = 1 . date("ym") . rand(100, 999);
+
+										if ($this->InvoiceModel->insert([
+											"invoice_number" => $invoice_number,
+											"transaction_id" => $transaction_id,
+											"nominal" => $products_sum
+										])) {
+											$data["status"] = "success";
+											$data["message"] = "Transaksi berhasil";
+										} else {
+											$data["status"] = "success";
+											$data["message"] = "Gagal generate invoice";
+										}
 									}
 								}
+							} else {
+								$data["status"] = "danger";
+								$data["message"] = "Transaksi gagal, produk tidak dipilih";
 							}
+
+							// print_r($products);
 						} else {
 							$data["status"] = "danger";
-							$data["message"] = "Transaksi gagal, produk tidak dipilih";
+							$data["message"] = "Credit Score tidak cukup!";
 						}
-
-						// print_r($products);
 						break;
 					case "delete":
 						$data = [

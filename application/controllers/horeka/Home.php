@@ -17,6 +17,7 @@ class Home extends CI_Controller
 		$this->load->model('horeka/ShoppingListModel');
 		$this->load->model('horeka/ShoppingProductsListModel');
 		$this->load->model('horeka/CartModel');
+		$this->load->model('horeka/CreditScoreModel');
 	}
 
 	public function index()
@@ -98,64 +99,73 @@ class Home extends CI_Controller
 
 						break;
 					case "cart":
-						$data = [
-							'user_id' => $this->auth->userID,
-							'product_id' => $this->input->post('buy_product_id'),
-							'qty' => $this->input->post('buy_qty')
-						];
+						$credit_score_horeka = $this->CreditScoreModel->getCreditScore();
+						$count_unpaid_invoice = $this->CreditScoreModel->count();
 
-						$cart = $this->CartModel->find($data['product_id']);
+						if ($credit_score_horeka > $count_unpaid_invoice) {
 
-						$continue_cart = false;
+							$data = [
+								'user_id' => $this->auth->userID,
+								'product_id' => $this->input->post('buy_product_id'),
+								'qty' => $this->input->post('buy_qty')
+							];
 
-						if ($this->CartModel->count_cart() > 0) {
-							$product_buy = $this->input->post('buy_product_id');
-							$product_buy_info = $this->ProductModel->getInfo('product_id', $product_buy)['vendor_id'];
+							$cart = $this->CartModel->find($data['product_id']);
 
-							$product_in_cart = $this->CartModel->getOne()[0]->product_id;
-							$product_in_cart_info = $this->ProductModel->getInfo('product_id', $product_in_cart)['vendor_id'];
+							$continue_cart = false;
 
-							if ($product_buy_info == $product_in_cart_info) {
+							if ($this->CartModel->count_cart() > 0) {
+								$product_buy = $this->input->post('buy_product_id');
+								$product_buy_info = $this->ProductModel->getInfo('product_id', $product_buy)['vendor_id'];
+
+								$product_in_cart = $this->CartModel->getOne()[0]->product_id;
+								$product_in_cart_info = $this->ProductModel->getInfo('product_id', $product_in_cart)['vendor_id'];
+
+								if ($product_buy_info == $product_in_cart_info) {
+									$continue_cart = true;
+								}
+							} else {
 								$continue_cart = true;
 							}
-						}else{
-							$continue_cart = true;
-						}
 
-						if ($continue_cart) {
-							$cart_count = $this->CartModel->count($data['product_id']);
+							if ($continue_cart) {
+								$cart_count = $this->CartModel->count($data['product_id']);
 
-							if ($cart_count > 0) {
-								$product_id = $data['product_id'];
+								if ($cart_count > 0) {
+									$product_id = $data['product_id'];
 
-								$data = [
-									'qty' => $cart['qty'] + $this->input->post('buy_qty')
-								];
+									$data = [
+										'qty' => $cart['qty'] + $this->input->post('buy_qty')
+									];
 
-								if ($product_qty >= $data['qty']) {
-									if ($this->CartModel->update($product_id, $data)) {
+									if ($product_qty >= $data['qty']) {
+										if ($this->CartModel->update($product_id, $data)) {
+											$data["status"] = "success";
+											$data["message"] = "cart updated";
+										} else {
+											$data["status"] = "danger";
+											$data["message"] = "cart lost";
+										}
+									} else {
+										$data["status"] = "danger";
+										$data["message"] = "stok tidak mencukupi";
+									}
+								} else {
+									if ($this->CartModel->insert($data)) {
 										$data["status"] = "success";
-										$data["message"] = "cart updated";
+										$data["message"] = "cart added";
 									} else {
 										$data["status"] = "danger";
 										$data["message"] = "cart lost";
 									}
-								} else {
-									$data["status"] = "danger";
-									$data["message"] = "stok tidak mencukupi";
 								}
 							} else {
-								if ($this->CartModel->insert($data)) {
-									$data["status"] = "success";
-									$data["message"] = "cart added";
-								} else {
-									$data["status"] = "danger";
-									$data["message"] = "cart lost";
-								}
+								$data["status"] = "danger";
+								$data["message"] = "Hapus cart terlebih dahulu untuk membeli dari vendor lain";
 							}
 						} else {
 							$data["status"] = "danger";
-							$data["message"] = "Hapus cart terlebih dahulu untuk membeli dari vendor lain";
+							$data["message"] = "Credit Score tidak cukup!";
 						}
 
 						break;
