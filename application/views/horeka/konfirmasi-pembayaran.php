@@ -30,12 +30,6 @@
 						<div class="list-group">
 							<div class="list-group-item">
 								<span class="float-left font-weight-bold">
-									ID Transaksi
-								</span>
-								<span class="float-right" id="detail-transaction_id"></span>
-							</div>
-							<div class="list-group-item">
-								<span class="float-left font-weight-bold">
 									Nominal
 								</span>
 								<span class="float-right" id="detail-nominal"></span>
@@ -96,8 +90,8 @@
 		var random = Math.floor(Math.random() * 100);
 		var invoice = $("#invoice").val();
 		var id = `${2}${invoice}${random}`;
+		id = id.replace(/\s/g,'');
 
-		$("#detail-transaction_id").text("");
 		$("#detail-nominal").text("");
 		$("#detail-status").text("");
 		$("#detail-tanggal").text("");
@@ -110,7 +104,6 @@
 			success: function(res) {
 				if (res) {
 					var data = JSON.parse(res);
-					$("#detail-transaction_id").text(data.transaction_id);
 					$("#detail-nominal").text(data.nominal);
 					$("#detail-status").text(data.status);
 					$("#detail-tanggal").text(data.tanggal);

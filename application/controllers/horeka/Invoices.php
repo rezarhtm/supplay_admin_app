@@ -54,11 +54,12 @@ class Invoices extends CI_Controller
 					"invoice_number" => $invoice_number,
 					"jumlah_transfer" => $this->input->post('jumlah'),
 					"bank_tujuan" => $this->input->post('bank'),
-					"bukti_pembayaran" => $config['file_name'] . '.' . end($dname)
+					"bukti_pembayaran" => $config['file_name'] . '.' . end($dname), 
 				]);
 
 				$update_invoice = $this->InvoiceModel->update($invoice_number, [
-					"status" => "UNPAID"
+					"status" => "CHECKING", 
+					"updated" => date("Y-m-d h:i:s")
 				]);
 
 				if ($this->upload->do_upload('bukti') && $insert && $update_invoice) {

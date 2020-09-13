@@ -6,11 +6,11 @@ class Test extends CI_Controller
 	{
 		parent::__construct();
 		$this->load->library(['auth']);
-		$this->load->model('horeka/CreditScoreModel');
-		$this->load->model('horeka/TransactionModel');
+		$this->load->model('TransactionModel');
 	}
 
 	public function index(){
-		print_r($this->TransactionModel->getPendingTransactions());
+		$data = $this->TransactionModel->getPendingTransactions();
+		echo json_encode($data);
 	}
 }

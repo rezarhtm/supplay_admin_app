@@ -12,27 +12,30 @@ class Invoices extends CI_Controller
 
 	public function generate()
 	{
-		$invoice_number = 1 . date("ym") . rand(100, 999);
-		$transactions = $this->TransactionModel->getPendingTransactions();
+		$transactions_ = $this->TransactionModel->getPendingTransactions();
 
-		$sum = 0;
-		$transaction_id = null;
-
-		foreach($transactions as $key => $transaction){
-			$sum += $transaction->total_order;
-			if($key == 0){
-				$transaction_id = $transaction->user_id;
-			}
+		foreach ($transactions_ as $trkey => $transactions) {
+			$invoice_number = 1 . date("ym") . rand(100, 999);
 			
-			$this->TransactionModel->update($transaction->id, [
-				'invoice_number' => $invoice_number
+			$sum = 0;
+			$transaction_id = null;
+
+			foreach($transactions as $key => $transaction){
+				$sum += $transaction['total_order'];
+				if($key == 0){
+					$transaction_id = $transaction['user_id'];
+				}
+
+				$this->TransactionModel->update($transaction['id'], [
+					'invoice_number' => $invoice_number
+				]);
+			}
+
+			$this->InvoiceModel->insert([
+				"invoice_number" => $invoice_number,
+				"user_id" => $transaction_id,
+				"nominal" => $sum
 			]);
 		}
-
-		$this->InvoiceModel->insert([
-			"invoice_number" => $invoice_number,
-			"user_id" => $transaction_id,
-			"nominal" => $sum
-		]);
 	}
 }
