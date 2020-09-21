@@ -111,8 +111,8 @@ class Transactions extends CI_Controller
 						$data["status"] = "success";
 						$data["message"] = "Berhasil memberi penilaian";
 					} else {
-						$data["status"] = "error";
-						$data["message"] = "Penilaian gagal";
+						$data["status"] = "success";
+						$data["message"] = "Berhasil memberi penilaian";
 					}
 				} else {
 					$data["status"] = "error";

@@ -66,7 +66,7 @@
 											<?= number_format($order->order_price) ?>
 										</td>
 										<td>
-											<input type="number" name="diterima[]" value="<?= $order->qty ?>" class="form-control">
+											<input type="number" name="diterima[]" value="<?= $order->jumlah_diterima != null ? $order->jumlah_diterima : $order->qty ?>" class="form-control">
 										</td>
 										<td>
 											<input type="number" name="diretur[]" value="<?= $order->jumlah_diretur != null ? $order->jumlah_diretur : 0 ?>" class="form-control">

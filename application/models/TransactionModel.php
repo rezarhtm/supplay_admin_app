@@ -94,9 +94,9 @@ class TransactionModel extends CI_Model
 				->get()
 				->result();
 		} else if ($this->auth->hasRole('horeka')) {
-			if ($transaction_status == 'RETURN') {
-				$this->db->where('orders.jumlah_diretur > 0');
-			}
+			// if ($transaction_status == 'RETURN') {
+			// 	$this->db->where('orders.jumlah_diretur > 0');
+			// }
 
 			return $this->db
 				->join('products', 'products.product_id = orders.product_id')
@@ -110,6 +110,7 @@ class TransactionModel extends CI_Model
 				->select('orders.order_price')
 				->select('orders.qty')
 				->select('orders.jumlah_diretur')
+				->select('orders.jumlah_diterima')
 
 				->select('transactions.id as transaction_id')
 				->where('transactions.id', $id)
