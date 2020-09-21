@@ -18,6 +18,7 @@ class Cart extends CI_Controller
 		$this->load->model('horeka/TransactionModel');
 		$this->load->model('horeka/InvoiceModel');
 		$this->load->model('horeka/CreditScoreModel');
+		$this->load->model('HorekaModel');
 	}
 
 	public function index()
@@ -52,7 +53,10 @@ class Cart extends CI_Controller
 								}
 
 								if ($check_product) {
+									$horeka_id = $this->HorekaModel->getInfo("h_username", $this->auth->userName);
+									$tr_id = "83" . substr($horeka_id['horeka_id'], -3) . rand(100, 999);
 									$data = [
+										"id" => $tr_id, 
 										"user_id" => $this->auth->userID,
 										"vendor_id" => $vendor_id
 									];

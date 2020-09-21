@@ -76,7 +76,7 @@
 							</tbody>
 						</table>
 
-						<?php if($transaction_status == 'ON PROCESS' || $transaction_status == 'RETURN'): ?>
+						<?php if($transaction_status == 'SENT' || $transaction_status == 'RETURN'): ?>
 						<div class="my-4">
 							<button type="submit" onclick="return confirm('Submit transaksi?')" name="submit_transaction" value="submit" class="w-100 btn btn-success font-weight-bold">
 								Submit

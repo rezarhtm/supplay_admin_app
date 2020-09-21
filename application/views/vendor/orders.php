@@ -31,6 +31,21 @@
 							</button>
 						</div>
 						<div class="modal-body">
+							<div class="mb-3">
+								<div>
+									<span class="font-weight-bold">Nama</span>
+									<span class="float-right" id="horeka-name-transaksi"></span>
+								</div>
+								<div>
+									<span class="font-weight-bold">Telepon</span>
+									<span class="float-right" id="horeka-phone-transaksi"></span>
+								</div>
+								<div>
+									<span class="font-weight-bold">Alamat</span>
+									<span class="float-right" id="horeka-address-transaksi"></span>
+								</div>
+
+							</div>
 							<div id="order-list"></div>
 						</div>
 					</div>
@@ -98,9 +113,12 @@
 		});
 
 		$('#datatable tbody').on('click', '#btn-lihat-pesanan', function() {
-			;
 			$("#order-list").text("");
 			$("#id-transaksi").text("");
+
+			$("#horeka-name-transaksi").text("");
+			$("#horeka-phone-transaksi").text("");
+			$("#horeka-address-transaksi").text("");
 
 			var data = dt.row($(this).parents('tr')).data();
 			var id = data[1];
@@ -109,9 +127,15 @@
 					url: `<?= base_url() ?>/index.php/api/orders/detail/${id}`
 				})
 				.done(function(data) {
-					var d = JSON.parse(data);
+					var dx = JSON.parse(data);
+					var d = dx.data;
+					var h = dx.horeka;
 
 					$("#id-transaksi").text(d[0].transaction_id);
+					$("#horeka-name-transaksi").text(h.h_name);
+					$("#horeka-phone-transaksi").text(h.h_phone);
+					$("#horeka-address-transaksi").text(h.h_address);
+
 					d.forEach(product => {
 						var order = `
 							<div class="card my-1">

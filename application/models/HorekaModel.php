@@ -24,7 +24,14 @@ class HorekaModel extends CI_Model {
         $this->db->where("horeka_id", $id);
         $this-> db ->update("horeka", $new);
         return $this->db->affected_rows();
-    }
+	}
+	public function getHorekaFromTransaction($id){
+		return $this->db
+			->join('users', 'users.id = transactions.user_id')
+			->join('horeka', 'horeka.h_username = users.username')
+			->where('transactions.id', $id)
+			->from('transactions')
+			->get()
+			->row_array();
+	}
 }
-
-?>

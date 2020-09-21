@@ -11,6 +11,7 @@ class Orders extends CI_Controller
 		$this->auth->authenticate();
 
 		$this->load->model("TransactionModel");
+		$this->load->model("HorekaModel");
 	}
 
 	public function index()
@@ -154,7 +155,10 @@ class Orders extends CI_Controller
 
 	public function detail($id)
 	{
-		$data = $this->TransactionModel->orders($id);
+		$tr = $this->TransactionModel->orders($id);
+
+		$data['data'] = $tr;
+		$data['horeka'] = $this->HorekaModel->getHorekaFromTransaction($id);
 
 		echo json_encode($data);
 	}
