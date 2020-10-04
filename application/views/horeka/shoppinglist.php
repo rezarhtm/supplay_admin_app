@@ -40,7 +40,7 @@
 								<?php foreach ($shopping_list as $list) : ?>
 									<tr>
 										<td>
-											<input type="checkbox" name="checked_product[]" value="<?= $list->product_id ?>" id="checked_product" checked>
+											<input type="checkbox" name="checked_product[]" value="<?= $list->product_id ?>" id="checked_product_<?= $list->product_id ?>" checked>
 										</td>
 										<td>
 											<?= $list->product_name ?>
@@ -53,9 +53,6 @@
 										</td>
 										<td>
 											<form method="POST">
-												<button onclick="addtocart('<?= $list->product_id ?>')" class="btn btn-primary" type="button">
-													Add to Cart
-												</button>
 												<input type="text" name="product_id" value="<?= $list->product_id ?>" hidden>
 												<button onclick="return confirm('Hapus <?= $list->product_name ?>?')" class="btn btn-danger" type="submit" value="delete" name="submit_shopping_list">
 													Hapus
@@ -66,6 +63,12 @@
 								<?php endforeach ?>
 							</tbody>
 						</table>
+
+						<div class="my-4">
+							<button onclick='addtocart(<?php echo json_encode($shopping_list) ?>)' class="btn btn-primary w-100" type="button">
+								Add to Cart
+							</button>
+						</div>
 
 						<!-- <div class="my-4">
 							<button type="submit" onclick="return confirm('Lakukan transaksi?')" name="submit_shopping_list" value="buy" class="w-100 btn btn-success font-weight-bold">
@@ -90,20 +93,35 @@
 </div>
 
 <script>
-	async function addtocart(p) {
-		var qty = $(`#qty_${p}`).val();
+	async function addtocart(x) {
+		var alert_;
+		var total_sukses = 0;
+		var total_gagal = 0;
+		var alasan_gagal;
 
-		console.log(qty);
+		for (var index = 0; index < x.length; index++) {
+			var p = x[index].product_id;
+			var qty = $(`#qty_${p}`).val();
+			var checked = $(`#checked_product_${p}`).is(':checked');
+			if (checked) {
+				var data = {
+					buy_qty: qty,
+					buy_product_id: p,
+					add_to: 'cart'
+				};
+				await $.post('<?= base_url('index.php/horeka') ?>', data, function(response) {
+					alert_ = $(response).find('.alert')[0].innerText;
+					if(alert_ == 'cart added' || alert_ == 'cart_updated'){
+						total_sukses++;
+					}else{
+						total_gagal++;
+						alasan_gagal = 'Hapus Cart dari vendor lain terlebih dahulu';
+					}
+				});
+			}
+		}
 
-		var data = {
-			buy_qty: qty,
-			buy_product_id: p,
-			add_to: 'cart'
-		};
-
-		$.post('<?= base_url('index.php/horeka') ?>', data, function(response) {
-			alert($(response).find('.alert')[0].innerText);
-		});
+		await alert('Sukses: ' + total_sukses + ' Gagal: ' + total_gagal + ' alasan gagal: ' + alasan_gagal);
 	}
 
 	$("#menu-toggle").click(function(e) {
