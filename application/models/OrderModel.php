@@ -15,4 +15,12 @@ class OrderModel extends CI_Model
 		
         return $this->db->affected_rows();
 	}
+
+	public function getByProductId($product_id){
+		return $this->db->where('id', $product_id)->from($this->table)->get()->row();
+	}
+
+	public function insert($data){
+		return $this->db->insert($this->table, $data);
+	}
 }

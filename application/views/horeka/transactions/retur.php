@@ -41,7 +41,7 @@
 									<th scope="col">Subtotal</th>
 
 									<!-- <th scope="col">Diterima</th> -->
-									<!-- <th scope="col">Diretur</th> -->
+									<th scope="col">Diretur</th>
 								</tr>
 							</thead>
 							<tbody>
@@ -68,24 +68,18 @@
 										<!-- <td>
 											<input type="number" name="diterima[]" value="<?= $order->jumlah_diterima != null ? $order->jumlah_diterima : $order->qty ?>" class="form-control">
 										</td> -->
-										<!-- <td>
+										<td>
 											<input type="number" name="diretur[]" value="<?= $order->jumlah_diretur != null ? $order->jumlah_diretur : 0 ?>" class="form-control">
-										</td> -->
+										</td>
 									</tr>
 								<?php endforeach ?>
 							</tbody>
 						</table>
 
-						<?php if($transaction_status == 'SENT'): ?>
-						<div class="mt-3 mb-1">
-							<button type="submit" onclick="return confirm('Submit transaksi?')" name="submit_transaction" value="submit" class="w-100 btn btn-success font-weight-bold">
-								Selesai
-							</button>
-						</div>
-
+						<?php if($transaction_status == 'COMPLETE'): ?>
 						<div>
-							<button type="submit" onclick="return confirm('Retur transaksi?')" name="retur_transaction" value="retur" class="w-100 btn btn-danger font-weight-bold">
-								Retur
+							<button type="submit" name="retur_transaction" value="retur" class="w-100 btn btn-danger font-weight-bold">
+								Confirm Retur
 							</button>
 						</div>
 						<?php endif ?>

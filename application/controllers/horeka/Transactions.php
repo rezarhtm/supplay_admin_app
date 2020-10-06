@@ -73,15 +73,31 @@ class Transactions extends CI_Controller
 					}
 				}
 			}
+
+			if ($this->input->post('retur_transaction')) {
+				if (
+					$this->TransactionModel->update($transaction_id, [
+						'order_status' => 'COMPLETE'
+					])
+				) {
+					$data["status"] = "success";
+					$data["message"] = "Order selesai";
+
+					return redirect('horeka/transactions/retur/' . $transaction_id);
+				} else {
+					$data["status"] = "error";
+					$data["message"] = "Konfirmasi Order gagal";
+				}
+			}
 		}
 
 		$data = [];
 
 		// if ($this->TransactionModel->getTransactionStatus($id) == 'ON PROCESS' || $this->TransactionModel->getTransactionStatus($id) == 'RETURN') {
-			$data['orders'] = $this->TransactionModel->orders($id);
-			$data['transaction_status'] = $this->TransactionModel->getTransactionStatus($id);
+		$data['orders'] = $this->TransactionModel->orders($id);
+		$data['transaction_status'] = $this->TransactionModel->getTransactionStatus($id);
 		// } else {
-			// return redirect('horeka/transactions');
+		// return redirect('horeka/transactions');
 		// }
 
 		$this->load->view('template/horeka/header');
@@ -130,6 +146,89 @@ class Transactions extends CI_Controller
 
 		$this->load->view('template/horeka/header');
 		$this->load->view('horeka/transactions/rate', $data);
+		$this->load->view('template/horeka/footer');
+	}
+
+	public function retur($id)
+	{
+		if ($this->input->method() == "post") {
+			$checked_product = $this->input->post('checked_product');
+			$diterima = $this->input->post('diterima');
+			$diretur = $this->input->post('diretur');
+
+			$transaction_id = $this->input->post('transaction_id');
+
+			if ($this->input->post('retur_transaction')) {
+				$total_retur = 0;
+
+				$transaction_data = $this->TransactionModel->find($transaction_id);
+				$this->TransactionModel->insert($transaction_data);
+
+				$new_tr_id = $this->db->insert_id();
+
+				foreach ($checked_product as $key => $product) {
+					if ($diretur[$key] > 0) {
+						$products = $this->OrderModel->getByProductId($product);
+						unset($products->transaction_id);
+						unset($products->jumlah_diretur);
+						unset($products->jumlah_diterima);
+						unset($products->id);
+
+						$products->transaction_id = $new_tr_id;
+						$products->jumlah_diterima = null;
+						$products->jumlah_diretur = $diretur[$key];
+
+						$this->OrderModel->insert($products);
+					}
+
+					$total_retur += $diretur[$key];
+				}
+
+				if ($total_retur > 0) {
+					if (
+						$this->TransactionModel->update($transaction_id, [
+							'order_status' => 'RETURN'
+						])
+					) {
+						$data["status"] = "success";
+						$data["message"] = "Order direturn";
+
+						return redirect('horeka/transactions/rate/' . $transaction_id);
+					} else {
+						$data["status"] = "error";
+						$data["message"] = "Konfirmasi Order gagal";
+					}
+				}
+			}
+
+			if ($this->input->post('retur_transaction')) {
+				if (
+					$this->TransactionModel->update($transaction_id, [
+						'order_status' => 'COMPLETE'
+					])
+				) {
+					$data["status"] = "success";
+					$data["message"] = "Order selesai";
+
+					return redirect('horeka/transactions/retur/' . $transaction_id);
+				} else {
+					$data["status"] = "error";
+					$data["message"] = "Konfirmasi Order gagal";
+				}
+			}
+		}
+
+		$data = [];
+
+		// if ($this->TransactionModel->getTransactionStatus($id) == 'ON PROCESS' || $this->TransactionModel->getTransactionStatus($id) == 'RETURN') {
+		$data['orders'] = $this->TransactionModel->orders($id);
+		$data['transaction_status'] = $this->TransactionModel->getTransactionStatus($id);
+		// } else {
+		// return redirect('horeka/transactions');
+		// }
+
+		$this->load->view('template/horeka/header');
+		$this->load->view('horeka/transactions/retur', $data);
 		$this->load->view('template/horeka/footer');
 	}
 }

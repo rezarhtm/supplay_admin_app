@@ -14,6 +14,7 @@ class TransactionModel extends CI_Model
 		$this->load->library(['auth']);
 
 		$this->load->model('VendorModel');
+		$this->load->model('HorekaModel');
 
 		$this->db->query('SET SESSION sql_mode = ""');
 
@@ -37,6 +38,14 @@ class TransactionModel extends CI_Model
 		$query = $this->db->get()->row();
 
 		return $query;
+	}
+
+	public function insert($data)
+	{
+		unset($data->id);
+		$horeka_id = $this->HorekaModel->getInfo("h_username", $this->auth->userName);
+		$data->id = "83" . substr($horeka_id['horeka_id'], -3) . rand(100, 999);
+		return $this->db->insert($this->table, $data);
 	}
 
 	public function update($id, $new)
