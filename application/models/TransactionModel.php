@@ -95,6 +95,8 @@ class TransactionModel extends CI_Model
 				->select('products.product_name')
 				->select('orders.product_price')
 				->select('orders.qty')
+				->select('orders.jumlah_diretur')
+				->select('orders.jumlah_diterima')
 
 				->select('transactions.id as transaction_id')
 				->select('transactions.total_order')

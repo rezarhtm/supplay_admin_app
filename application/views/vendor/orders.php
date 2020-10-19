@@ -136,8 +136,11 @@
 					$("#horeka-phone-transaksi").text(h.h_phone);
 					$("#horeka-address-transaksi").text(h.h_address);
 
-					d.forEach(product => {
-						var order = `
+					var jumlah_yang_diterima = 0;
+
+					d.forEach((product, key) => {
+						if(!product.jumlah_diretur){
+							var order = `
 							<div class="card my-1">
 								<div class="card-body">
 									<div>
@@ -146,9 +149,55 @@
 									</div>
 								</div>
 							</div>
-						`;
+							`;
+						}else{
+							if(product.qty - product.jumlah_diretur > 0){
+								var order = `
+								<div class="card my-1">
+									<div class="card-body">
+										<div>
+											<span>${product.product_name}</span>
+											<span class="float-right">${product.product_price} <i class="fa fa-times mx-2"></i> ${product.qty - product.jumlah_diretur}</span>
+										</div>
+									</div>
+								</div>
+								`;
+							}
+						}
+
+						jumlah_yang_diterima++;
+
+						if(jumlah_yang_diterima == 1){
+							$("#order-list").append('<h6 class="mt-3">Jumlah pesanan / yang diterima</h6>');
+						}
 
 						$("#order-list").append(order);
+					});
+
+					d.forEach((product, key) => {
+						var jumlah = 0;
+						if(product.jumlah_diretur){
+							jumlah++;
+						}
+
+						if(jumlah > 0 && key == 0){
+							$("#order-list").append('<h6 class="mt-3">Jumlah yang diretur</h6>');
+						}
+
+						if(product.jumlah_diretur){
+							var order = `
+							<div class="card my-1">
+								<div class="card-body">
+									<div>
+										<span>${product.product_name}</span>
+										<span class="float-right">${product.product_price} <i class="fa fa-times mx-2"></i> ${product.jumlah_diretur}</span>
+									</div>
+								</div>
+							</div>
+							`;
+
+							$("#order-list").append(order);
+						}
 					});
 
 					var order_1 = `

@@ -34,44 +34,57 @@ class Transactions extends CI_Controller
 			$transaction_id = $this->input->post('transaction_id');
 
 			if ($this->input->post('submit_transaction')) {
-				$total_retur = 0;
+				if (
+					$this->TransactionModel->update($transaction_id, [
+						'order_status' => 'COMPLETE'
+					])
+				) {
+					$data["status"] = "success";
+					$data["message"] = "Order selesai";
 
-				foreach ($checked_product as $key => $product) {
-					$this->OrderModel->update($product, [
-						'jumlah_diterima' => $diterima[$key],
-						'jumlah_diretur' => $diretur[$key],
-					]);
-
-					$total_retur += $diretur[$key];
-				}
-
-				if ($total_retur > 0) {
-					if (
-						$this->TransactionModel->update($transaction_id, [
-							'order_status' => 'RETURN'
-						])
-					) {
-						$data["status"] = "success";
-						$data["message"] = "Order direturn";
-					} else {
-						$data["status"] = "error";
-						$data["message"] = "Konfirmasi Order gagal";
-					}
+					return redirect('horeka/transactions/rate/' . $transaction_id);
 				} else {
-					if (
-						$this->TransactionModel->update($transaction_id, [
-							'order_status' => 'COMPLETE'
-						])
-					) {
-						$data["status"] = "success";
-						$data["message"] = "Order selesai";
-
-						return redirect('horeka/transactions/rate/' . $transaction_id);
-					} else {
-						$data["status"] = "error";
-						$data["message"] = "Konfirmasi Order gagal";
-					}
+					$data["status"] = "error";
+					$data["message"] = "Konfirmasi Order gagal";
 				}
+				// $total_retur = 0;
+
+				// foreach ($checked_product as $key => $product) {
+				// 	$this->OrderModel->update($product, [
+				// 		'jumlah_diterima' => $diterima[$key],
+				// 		'jumlah_diretur' => $diretur[$key],
+				// 	]);
+
+				// 	$total_retur += $diretur[$key];
+				// }
+
+				// if ($total_retur > 0) {
+				// 	if (
+				// 		$this->TransactionModel->update($transaction_id, [
+				// 			'order_status' => 'RETURN'
+				// 		])
+				// 	) {
+				// 		$data["status"] = "success";
+				// 		$data["message"] = "Order direturn";
+				// 	} else {
+				// 		$data["status"] = "error";
+				// 		$data["message"] = "Konfirmasi Order gagal";
+				// 	}
+				// } else {
+				// 	if (
+				// 		$this->TransactionModel->update($transaction_id, [
+				// 			'order_status' => 'COMPLETE'
+				// 		])
+				// 	) {
+				// 		$data["status"] = "success";
+				// 		$data["message"] = "Order selesai";
+
+				// 		return redirect('horeka/transactions/rate/' . $transaction_id);
+				// 	} else {
+				// 		$data["status"] = "error";
+				// 		$data["message"] = "Konfirmasi Order gagal";
+				// 	}
+				// }
 			}
 
 			if ($this->input->post('retur_transaction')) {
@@ -161,61 +174,80 @@ class Transactions extends CI_Controller
 			if ($this->input->post('retur_transaction')) {
 				$total_retur = 0;
 
-				$transaction_data = $this->TransactionModel->find($transaction_id);
-				$this->TransactionModel->insert($transaction_data);
+				// $transaction_data = $this->TransactionModel->find($transaction_id);
+				// $this->TransactionModel->insert($transaction_data);
 
-				$new_tr_id = $this->db->insert_id();
+				// $new_tr_id = $this->db->insert_id();
+				$error = null;
 
 				foreach ($checked_product as $key => $product) {
 					if ($diretur[$key] > 0) {
 						$products = $this->OrderModel->getByProductId($product);
-						unset($products->transaction_id);
-						unset($products->jumlah_diretur);
-						unset($products->jumlah_diterima);
-						unset($products->id);
 
-						$products->transaction_id = $new_tr_id;
-						$products->jumlah_diterima = null;
-						$products->jumlah_diretur = $diretur[$key];
+						if($products->qty < $diretur[$key]){
+							$error = "Retur melebihi Kuantitas";
+						}
 
-						$this->OrderModel->insert($products);
+						if(!$error){
+							$this->OrderModel->update($product, [
+								// 'jumlah_diterima' => $diterima[$key],
+								'jumlah_diretur' => $diretur[$key],
+							]);
+						}
+						// unset($products->transaction_id);
+						// unset($products->jumlah_diretur);
+						// unset($products->jumlah_diterima);
+						// unset($products->id);
+
+						// $products->transaction_id = $new_tr_id;
+						// $products->jumlah_diterima = null;
+						// $products->jumlah_diretur = $diretur[$key];
+
+						// $this->OrderModel->insert($products);
 					}
 
 					$total_retur += $diretur[$key];
 				}
 
-				if ($total_retur > 0) {
-					if (
-						$this->TransactionModel->update($transaction_id, [
-							'order_status' => 'RETURN'
-						])
-					) {
-						$data["status"] = "success";
-						$data["message"] = "Order direturn";
-
-						return redirect('horeka/transactions/rate/' . $transaction_id);
-					} else {
-						$data["status"] = "error";
-						$data["message"] = "Konfirmasi Order gagal";
+				if(!$error){
+					if ($total_retur > 0) {
+						if (
+							$this->TransactionModel->update($transaction_id, [
+								'order_status' => 'RETURN'
+							])
+						) {
+							$data["status"] = "success";
+							$data["message"] = "Order direturn";
+	
+							return redirect('horeka/transactions/rate/' . $transaction_id);
+						} else {
+							$data["status"] = "error";
+							$data["message"] = "Konfirmasi Order gagal";
+						}
 					}
-				}
-			}
-
-			if ($this->input->post('retur_transaction')) {
-				if (
-					$this->TransactionModel->update($transaction_id, [
-						'order_status' => 'COMPLETE'
-					])
-				) {
-					$data["status"] = "success";
-					$data["message"] = "Order selesai";
-
-					return redirect('horeka/transactions/retur/' . $transaction_id);
-				} else {
+				}else{
 					$data["status"] = "error";
-					$data["message"] = "Konfirmasi Order gagal";
+					$data["message"] = $error;
 				}
+
+				
 			}
+
+			// if ($this->input->post('retur_transaction')) {
+			// 	if (
+			// 		$this->TransactionModel->update($transaction_id, [
+			// 			'order_status' => 'COMPLETE'
+			// 		])
+			// 	) {
+			// 		$data["status"] = "success";
+			// 		$data["message"] = "Order selesai";
+
+			// 		return redirect('horeka/transactions/retur/' . $transaction_id);
+			// 	} else {
+			// 		$data["status"] = "error";
+			// 		$data["message"] = "Konfirmasi Order gagal";
+			// 	}
+			// }
 		}
 
 		$data = [];
