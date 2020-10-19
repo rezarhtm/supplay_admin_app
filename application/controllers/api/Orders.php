@@ -17,6 +17,7 @@ class Orders extends CI_Controller
 	public function index()
 	{
 		$status = null;
+		$invoice_number = isset($_POST['invoice']) ? $_POST['invoice'] : null;
 
 		if (isset($_POST['status'])) {
 			if ($_POST['status'] == 'pending') {
@@ -26,7 +27,7 @@ class Orders extends CI_Controller
 			}
 		}
 
-		$list = $this->TransactionModel->get_datatables($status);
+		$list = $this->TransactionModel->get_datatables($status, $invoice_number);
 		$data = array();
 		$no = $_POST['start'];
 

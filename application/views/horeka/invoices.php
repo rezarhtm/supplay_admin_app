@@ -43,12 +43,12 @@
 											<?= $invoice->status ?>
 										</td>
 										<td>
-											<button class="btn btn-secondary">
+											<a href="<?= site_url('horeka/transactions') . '?invoice=' . $invoice->invoice_number ?>" class="btn btn-secondary">
 												View
-											</button>
-											<button class="btn btn-secondary">
+											</a>
+											<!-- <button class="btn btn-secondary">
 												Print
-											</button>
+											</button> -->
 										</td>
 									</tr>
 								<?php endforeach ?>

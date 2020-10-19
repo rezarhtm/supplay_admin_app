@@ -74,6 +74,9 @@
 
 			"ajax": {
 				"url": "<?= site_url('api/orders') ?>",
+				"data": {
+					"invoice": "<?= isset($_GET['invoice']) ? $_GET['invoice'] : null ?>"
+				},
 				"type": "POST"
 			},
 

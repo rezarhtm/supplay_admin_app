@@ -131,7 +131,7 @@ class TransactionModel extends CI_Model
 		}
 	}
 
-	private function _get_datatables_query($status = null)
+	private function _get_datatables_query($status = null, $invoice_number = null)
 	{
 		if ($this->auth->hasRole('vendor')) {
 			$vendor = $this->VendorModel->getInfo('v_username', $this->auth->userName);
@@ -156,6 +156,9 @@ class TransactionModel extends CI_Model
 			$this->db->group_by('transactions.id');
 		} else if ($this->auth->hasRole('horeka')) {
 			$this->db->where('user_id', $this->auth->userID);
+			if($invoice_number){
+				$this->db->where('invoice_number', $invoice_number);
+			}
 		}
 
 		$this->db->from($this->table);
@@ -186,9 +189,9 @@ class TransactionModel extends CI_Model
 		}
 	}
 
-	function get_datatables($status = null)
+	function get_datatables($status = null, $invoice_number = null)
 	{
-		$this->_get_datatables_query($status);
+		$this->_get_datatables_query($status, $invoice_number);
 		if ($_POST['length'] != -1)
 			$this->db->limit($_POST['length'], $_POST['start']);
 		$query = $this->db->get();
