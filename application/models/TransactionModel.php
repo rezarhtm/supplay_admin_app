@@ -78,7 +78,11 @@ class TransactionModel extends CI_Model
 		$data = $this->db->get($this->table)->result_array();
 
 		foreach ($data as $key => $each) {
-			$data['transactions'][$each['user_id']]   = $this->db->where('user_id', $each['user_id'])->get($this->table)->result_array();
+			$this->db->where('invoice_number', null);
+			$this->db->where('created_at >=', $from_date);
+			$this->db->where('created_at <=', $to_date);
+			$this->db->group_by('user_id');
+			$data['transactions'][$each['user_id']] = $this->db->where('user_id', $each['user_id'])->get($this->table)->result_array();
 		}
 
 		return $data['transactions'];
