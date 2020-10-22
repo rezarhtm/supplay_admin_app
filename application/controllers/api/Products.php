@@ -15,9 +15,9 @@ class Products extends CI_Controller
 
     public function index()
     {
-        $list = $this->ProductModel->get_datatables();
+        $list = $this->ProductModel->get_datatables_();
         $data = array();
-        $no = $_POST['start'];
+		$no = $_POST['start'];
 
         foreach ($list as $field) {
             $no++;
