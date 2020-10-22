@@ -4,7 +4,7 @@
         public function get() {
             $this -> load -> database();
             $this -> db -> order_by("category_id");
-            $this -> db -> limit(15);
+            // $this -> db -> limit(15);
             return $this -> db -> get("category")->result();
         }
         public function insert($data = array()) {
@@ -19,7 +19,7 @@
         public function detail($category_id) {
             $this -> load -> database();
             $this -> db -> where("category_id", $category_id);
-            $this -> db -> limit(10);
+            // $this -> db -> limit(10);
             return $this -> db -> get("category")->result();
         }
         public function update($id, $new) {
