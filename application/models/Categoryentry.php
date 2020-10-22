@@ -1,6 +1,6 @@
 <?php
 
-    class category_entry extends CI_Model {
+    class Categoryentry extends CI_Model {
         public function get() {
             $this -> load -> database();
             $this -> db -> order_by("category_id");

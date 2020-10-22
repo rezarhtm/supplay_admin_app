@@ -15,7 +15,12 @@ class Products extends CI_Controller
 
     public function index()
     {
-        $list = $this->ProductModel->get_datatables_();
+		if ($this->auth->hasRole('horeka')) {
+			$list = $this->ProductModel->get_datatables_();
+		}else{
+			$list = $this->ProductModel->get_datatables();
+		}
+		
         $data = array();
 		$no = $_POST['start'];
 

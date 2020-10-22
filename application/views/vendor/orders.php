@@ -124,7 +124,7 @@
 			var id = data[1];
 			$.ajax({
 					method: "GET",
-					url: `<?= base_url() ?>/index.php/api/orders/detail/${id}`
+					url: `<?= base_url() ?>index.php/api/orders/detail/${id}`
 				})
 				.done(function(data) {
 					var dx = JSON.parse(data);
