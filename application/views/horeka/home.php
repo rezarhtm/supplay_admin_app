@@ -343,6 +343,7 @@
 							<!-- <th scope="col">No</th> -->
 							<th scope="col">ID</th>
 							<th scope="col">Nama Produk</th>
+							<th scope="col">Vendor</th>
 							<th scope="col">Harga Per Unit</th>
 							<th scope="col">Unit</th>
 							<th scope="col">Aksi</th>

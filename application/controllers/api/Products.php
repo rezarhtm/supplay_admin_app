@@ -29,7 +29,8 @@ class Products extends CI_Controller
             $row = array();
             // $row[] = $no;
             $row[] = $field->product_id;
-            $row[] = $field->product_name;
+			$row[] = $field->product_name;
+			$row[] = $field->vendor_id;
             $row[] = number_format($field->price_perunit);
             $row[] = $field->unit;
 
