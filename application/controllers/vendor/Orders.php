@@ -49,7 +49,16 @@ class Orders extends CI_Controller
                             $data["status"] = "danger";
                             $data["message"] = "Data gagal di update, silahkan coba lagi";
                         }
-                        break;
+						break;
+					case "konfirmasiselesai":
+						if($this->TransactionModel->update($transaction_id, ["order_status" => 'COMPLETE'])){
+							$data["status"] = "success";
+							$data["message"] = "Transaksi berhasil dikonfirmasi";
+						}else{
+							$data["status"] = "danger";
+							$data["message"] = "Data gagal di update, silahkan coba lagi";
+						}
+						break;
                     default:
                         break;
                 }

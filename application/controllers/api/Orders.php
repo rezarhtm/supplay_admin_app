@@ -95,6 +95,13 @@ class Orders extends CI_Controller
 								<button onclick="return confirm(`Kirim?`)" type="submit" value="kirim" name="set_transaction" class="btn btn-primary w-100 my-1 float-right font-weight-bold" id="btn-kirim">Kirim</button>
 							</form>
 						';
+					} else if ($field->order_status == 'RETURN') {
+						$row[] = '
+							<form method="POST">
+							<input hidden name="transaction_id" value="' . $field->transaction_id . '">
+								<button onclick="return confirm(`Konfirmasi?`)" type="submit" value="konfirmasiselesai" name="set_transaction" class="btn btn-primary w-100 my-1 float-right font-weight-bold" id="btn-kirim">Konfirmasi</button>
+							</form>
+						';
 					} else {
 						$row[] = '';
 					}
